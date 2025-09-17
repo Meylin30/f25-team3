@@ -38,7 +38,7 @@ Table of Contents
 | Name | Date    | Reason For Changes  | Version   |
 | ---- | ------- | ------------------- | --------- |
 |      |         |                     |           |
-|      |         |                     |           |
+| Elisha | 9/16/25 | Initial SRS       | 1.0       |
 |      |         |                     |           |
 
 ## 1. Introduction
@@ -50,7 +50,19 @@ Describe the purpose of the SRS and its intended audience.
 Identify the product whose software requirements are specified in this document, including the revision or release number. Explain what the product that is covered by this SRS will do, particularly if this SRS describes only part of the system or a single subsystem. 
 Provide a short description of the software being specified and its purpose, including relevant benefits, objectives, and goals. Relate the software to corporate goals or business strategies. If a separate vision and scope document is available, refer to it rather than duplicating its contents here.
 
-### 1.3 Definitions, Acronyms and Abbreviations                                                                                                                                                                          |
+### 1.3 Definitions, Acronyms and Abbreviations                                                                              
+| Reference  | Definition                                                                                                        |
+|------------|-------------------------------------------------------------------------------------------------------------------|
+| API        | Application Programming Interface. This will be used to interface the backend and the fronted of our application. |
+| CSS        | Cascading Style Sheets. Will be used to add styles and appearance to the web app.                                 |
+| HTML       | Hypertext Markup Language. This is the code that will be used to structure and design the web application and its content.|
+| Java       | A programming language originally developed by James Gosling at Sun Microsystems. We will be using this language to build the backend service.|
+| JavaScript | An object-oriented computer programming language commonly used to create interactive effects within web browsers.Will be used in conjuction with HTML and CSS to make the web app.|
+| Postgresql | Open-source relational database management system.                                                                |
+| Spring Web | Will be used to build our web application by using Spring MVC. This is one of the dependencies of our system.     |
+| SpringBoot | An open-source Java-based framework used to create a micro Service. This will be used to create and run our application.|
+| VS Code    | An integrated development environment (IDE) for Java. This is where our system will be created.                   |
+
 
 ### 1.4 References
 List any other documents or Web addresses to which this SRS refers. These may include user interface style guides, contracts, standards, system requirements specifications, use case documents, or a vision and scope document. Provide enough information so that the reader could access a copy of each reference, including title, author, version number, date, and source or location.
@@ -62,34 +74,34 @@ Describe what the rest of the document contains and how it is organized.
 This section should describe the general factors that affect the product and its requirements. This section does not state specific requirements. Instead, it provides a background for those requirements, which are defined in detail in Section 3, and makes them easier to understand.
 
 ### 2.1 Product Functions
-Summarize the major functions the product must perform or must let the user perform. Details will be provided in Section 3, so only a high level summary (such as a bullet list) is needed here. Organize the functions to make them understandable to any reader of the SRS. A picture of the major groups of related requirements and how they relate, such as a top level data flow diagram or object class diagram, is often effective.
+SpartanFitness allows Providers to:
++ create and customize their individual profiles intuitively
++ create and customize workout plans.
++ manage subscriptions at their own discression.
+
+SpartanFitness allows Users to:
++ create and customize their individual profiles intuitively
++ subscribe and unsubscribe to any workout plan of their choosing.
++ provide feedback to workout plans through a rating system.
 
 ### 2.2 Product Constraints
-This subsection should provide a general description of any other items that will limit the developer’s options. These may include:  
-
-* Interfaces to users, other applications or hardware.  
-* Quality of service constraints.  
-* Standards compliance.  
-* Constraints around design or implementation.
+At this point the program will only be running on a computer with Java jdk 21, however it may be 22 or later at some point in the future. The front end of the program will be limited to JavaScript as the webpages will be written in HTML. The providers using this program must be certified to offer their services. Scalability, due to  use of a free version of a Postgresql database.
   
 ### 2.3 User Characteristics
-Identify the various user classes that you anticipate will use this product. User classes may be differentiated based on frequency of use, subset of product functions used, technical expertise, security or privilege levels, educational level, or experience. Describe the pertinent characteristics of each user class. Certain requirements may pertain only to certain user classes. Distinguish the most important user classes for this product from those who are less important to satisfy.
+The users of this app will fall into two classes: customer and provider. Our website application does not expect our users to have any prior knowledge of a computer, apart from using a web browser. The features of this application will adhere to the structure of other apps within its category, this will increase the likelihood that our users will be familiar with its functionality. Customers are expected to use the app daily or casually, while providers are expected to use daily. Their will be a special class of provider that has admin capabilites, who can add providers as they must meet external qualifications before being registered.
 
 ### 2.4 Assumptions and Dependencies
-List any assumed factors (as opposed to known facts) that could affect the requirements stated in the SRS. These could include third-party or commercial components that you plan to use, issues around the development or operating environment, or constraints. The project could be affected if these assumptions are incorrect, are not shared, or change. Also identify any dependencies the project has on external factors, such as software components that you intend to reuse from another project, unless they are already documented elsewhere (for example, in the vision and scope document or the project plan).
+We will be using Java, with our program being dependent on Spring & SpringBoot, and RestAPI to connect to external APIs and developed with VS Code. We expect to use extern calendar API for tracking workouts during the week.
 
 ## 3. Requirements
 
 ### 3.1 Functional Requirements 
-This section specifies the software product's requirements. Specify all of the software requirements to a level of detail sufficient to enable designers to design a software system to satisfy those requirements, and to enable testers to test that the software system satisfies those requirements.
-
-The specific requirements should:
-* Be uniquely identifiable.
-* State the subject of the requirement (e.g., system, software, etc.) and what shall be done.
-* Optionally state the conditions and constraints, if any.
-* Describe every input (stimulus) into the software system, every output (response) from the software system, and all functions performed by the software system in response to an input or in support of an output.
-* Be verifiable (e.g., the requirement realization can be proven to the customer's satisfaction)
-* Conform to agreed upon syntax, keywords, and terms.
+* FR#: The system shall allow customers to browse a list of workout plans.
+  + The list of workouts shall have a search and filter option, by level of experience and/or goal.
+* FR#: The system shall allow customers to subscribe to any workout plan.
+  + A customer may unscribe at any time.
+* FR#:The system shall allow the customer to rate the workout based on overall plan, individual exercises of that plan, and difficulty.
+  + The customer can also leave a review with their rating.
 
 #### 3.1.1 User interfaces
 Define the software components for which a user interface is needed. Describe the logical characteristics of each interface between the software product and the users. This may include sample screen images, any GUI standards or product family style guides that are to be followed, screen layout constraints, standard buttons and functions (e.g., help) that will appear on every screen, keyboard shortcuts, error message display standards, and so on. Details of the user interface design should be documented in a separate user interface specification.
@@ -114,13 +126,13 @@ Specify any requirements regarding security or privacy issues surrounding use of
 Specify the factors required to establish the required reliability of the software system at time of delivery.
 
 #### 3.2.4 Availability
-Specify the factors required to guarantee a defined availability level for the entire system such as checkpoint, recovery, and restart.
-
+NFR#: SpartaFitness will be available 24/7. Scheduled Maintenance should be initialized during scheduled low activity hours such as midnight to minimize conflict with users using the app.
 #### 3.2.5 Compliance
-Specify the requirements derived from existing standards or regulations
+NFR#: We will comply to the best of our ability to User data protections to the extent of which the law requires.
+NFR#: As well as to accessiblity standards for online navigations.
 
 #### 3.2.6 Cost
-Specify monetary cost of the software product.
+NFR#: We expect to spend zero dollars on this project.
 
 #### 3.2.7 Deadline
-Specify schedule for delivery of the software product.
+NFR#: The final product must be delivered by December 2025.
