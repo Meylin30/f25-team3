@@ -120,7 +120,7 @@ header .fas fa-bars{
     display: flex;
     align-items: center;
     min-height: 100vh;
-    background: url(https://thumbs.dreamstime.com/z/two-cute-white-puppies-background-twin-isolated-273047181.jpg) no-repeat;
+    background: url(https://as2.ftcdn.net/v2/jpg/04/48/54/67/1000_F_448546779_u9uNrL4FAZaVH1nqvHksMtQa9tVXi6LT.jpg) no-repeat;
 }
 
 .home .content{
@@ -137,10 +137,11 @@ header .fas fa-bars{
     line-height: 1.5;
 }
 .home .content p{
-    font-size: 1.5 rem;
+    font-size: 1.5rem;
     color: black;
     padding: 1rem 0;
     line-height: 1.5;
+    max-width: 42rem;
 }
 
 

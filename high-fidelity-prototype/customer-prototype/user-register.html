@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Homepage</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+        <link rel="stylesheet" href="customer-style.css">
+    </head> 
+    <body>
+      <header>
+          <a href="homepage.html" class="logo">Spartan Fitness<span>.</span></a>   
+          <nav class="navbar">
+          <a href="explore.html">Workouts</a>
+          <a href="user-profile.html">Profile</a>
+          <a href="login.html">Sign In</a>
+          </nav>
+          <div class="container">
+              <form action="">
+                  <input type="search" name="" placeholder="Search here..." id="search-box">
+                  <label for="search-box" class="fas fa-search"></label>
+              </form>
+          </div>
+      </header>
+      <main>
+      <div class="register-container">
+        <form id="signup-form" action="button">
+            <div class="progress-dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+          <!-- Step 1 -->
+          <div class="form-step active">
+            <h2>Step 1: Account Info</h2>
+            <label for="email">Email</label>
+            <input type="email" id="email" required placeholder="Enter your email" />
+
+            <label for="username">Username</label>
+            <input type="text" id="username" required placeholder="Choose a username" />
+
+            <label for="password">Password</label>
+            <input type="password" id="password" required placeholder="Create a password" />
+
+            <div class="buttons">
+              <div></div>
+              <button type="button" class="next-btn">Next</button>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="form-step">
+            <h2>Step 2: Personal Info</h2>
+            <label for="full-name">Full Name</label>
+            <input type="text" id="full-name" required placeholder="Your full name" />
+            
+            <label for="dob">Date of Birth</label>
+            <input type="date" id="dob" required />
+
+            <label for="height"></label>
+            <input type="text" id="height" required placeholder="Your height" /> 
+
+            <label for="weight"></label>
+            <input type="text" id="weight" required placeholder="Your weight" />
+
+
+            <div class="buttons">
+              <button type="button" class="prev-btn">Previous</button>
+              <button type="button" class="next-btn">Next</button>
+            </div>
+          </div>
+
+          <div class="form-step">
+            <h2>Step 3: Fitness Info</h2>
+
+            <label for="fitness-level">Fitness Level</label>
+            <select id="fitness-level" required>
+              <option value="" disabled selected>Select your level</option>
+              <option value="beginner">Beginner</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="advanced">Advanced</option>
+            </select>
+
+            <label for="goal">Fitness Goal</label>
+            <select id="goal" required>
+              <option value="" disabled selected>Select your goal</option>
+              <option value="lose-weight">Lose Weight</option>
+              <option value="build-muscle">Build Muscle</option>
+              <option value="improve-endurance">Improve Endurance</option>
+              <option value="general-health">General Health</option>
+            </select>
+
+            <div class="buttons">
+              <button type="button" class="prev-btn">Previous</button>
+            </div>
+            <button type="button" id="create-account-btn" class="submit-btn">Create Account</button>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <script>
+      const form = document.getElementById('signup-form');
+      const steps = Array.from(document.querySelectorAll('.form-step'));
+      const nextBtns = document.querySelectorAll('.next-btn');
+      const prevBtns = document.querySelectorAll('.prev-btn');
+      const dots = document.querySelectorAll('.progress-dots .dot');
+      const createAccountBtn = document.getElementById('create-account-btn');
+
+      let currentStep = 0;
+
+      function showStep(step) {
+        steps.forEach((s, i) => {
+          s.classList.toggle('active', i === step);
+        });
+        updateDots(step);
+      }
+
+      function updateDots(step) {
+        dots.forEach((dot, index) => {
+          dot.classList.toggle('active', index === step);
+        });
+      }
+
+      showStep(currentStep);
+
+      nextBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const inputs = steps[currentStep].querySelectorAll('input, select');
+          let valid = true;
+          inputs.forEach(input => {
+            if (!input.checkValidity()) {
+              input.reportValidity();
+              valid = false;
+            }
+          });
+          if (!valid) return;
+
+          if (currentStep < steps.length - 1) {
+            currentStep++;
+            showStep(currentStep);
+          }
+        });
+      });
+
+      prevBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (currentStep > 0) {
+            currentStep--;
+            showStep(currentStep);
+          }
+        });
+      });
+
+      form.addEventListener('submit', e => {
+        e.preventDefault();
+
+        const inputs = steps[currentStep].querySelectorAll('input, select');
+        let valid = true;
+        inputs.forEach(input => {
+          if (!input.checkValidity()) {
+            input.reportValidity();
+            valid = false;
+          }
+        });
+        if (!valid) return;
+
+        const data = {
+          email: form.querySelector('#email')?.value,
+          username: form.querySelector('#username')?.value,
+          password: form.querySelector('#password')?.value,
+          firstName: form.querySelector('#first-name')?.value,
+          lastName: form.querySelector('#last-name')?.value,
+          dob: form.querySelector('#dob')?.value,
+          fitnessLevel: form.querySelector('#fitness-level')?.value,
+          goal: form.querySelector('#goal')?.value,
+        };
+
+        console.log('Form submitted:', data);
+        alert('Account created! Check console for details.');
+      });
+
+      if (createAccountBtn) {
+        createAccountBtn.addEventListener('click', () => {
+          window.location.href = 'user-profile.html';
+        });
+      }
+    </script>
+    </body>
+</html>
