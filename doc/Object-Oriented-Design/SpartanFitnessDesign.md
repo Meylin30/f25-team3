@@ -1,9 +1,3 @@
-# LocalHarvest Hub - Software Design 
-
-Version 1  
-Prepared by Alice Beback\
-LocalHarvest Hub\
-Oct 8, 2025
 
 Table of Contents
 =================
@@ -21,12 +15,11 @@ Table of Contents
 | Name | Date    | Reason For Changes  | Version   |
 | ---- | ------- | ------------------- | --------- |
 |  Al  |10/8     | Initial Design      |    1      |
-|      |         |                     |           |
+|  MB  |10/16    | Initial Design      |    1      |
 |      |         |                     |           |
 
 ## 1. Product Overview
-LocalHarvest Hub is a simple, comprehensive, easy to use web app with the goal of connecting consumers to locally grown produce. Farmers and customers make use of the centralized platform to meet their needs. 
-Farmers create and publish produce boxes, customers subscribe any available boxes that they are interested in, either as a one-off or recurring subscription.
+SpartanFitness is web-based platform designed to help individuals of all fitness levels access structured training programs, workout resources, and progress tracking tools. Users can explore customized exercise routines, monitors their performance over time, and engage with a supportive community to stay motivated. Trainers can create and share personalized workout plans, track client achievements, and provide feedback directly through the system. The platform supports multiple user roles, including members, trainers, and administrators, each tailored tools to ensure an engaging effective, and goal-oritented fitness experience.
 
 ## 2. Use Cases
 ### 2.1 Use Case Model
@@ -34,17 +27,17 @@ Farmers create and publish produce boxes, customers subscribe any available boxe
 
 ### 2.2 Use Case Descriptions
 
-#### 2.2.1 Actor: Farmer
+#### 2.2.1 Actor: Provider
 ##### 2.2.1.1 Sign Up
-A farmer can sign up to create their profile with their name, email, password, and phone number. Emails must be unique.
+A provider can sign up to create their profile with their name, email, password, and phone number. Emails must be unique.
 ##### 2.2.1.2 Log In
-A farmer shall be able to sign in using their registred email and password. After logging in, the farmer shall be directed their dashboard where they see an overview of their farm, boxes and stats.
+A provider shall be able to sign in using their registred email and password. After logging in, the provider shall be directed their dashboard where they see an overview of their homepage, workouts and stats.
 ##### 2.2.1.3 Update Profile
-A farmer shall be to modify their profile by going to their profile page. They can change their email, password, and farm.
-##### 2.2.1.4 Create Produce Boxes
-The farmer shall be able to create a new produce box listing. They would provide a box name, description, and price. This box will be created to be associated with only this farmer and their farm.
+A provider shall be to modify their profile by going to their profile page. They can change their email, password, and workout plans.
+##### 2.2.1.4 Create workout plans
+The provider shall be able to create a new workout plans. They would provide a workout names, and description. This workouts can be unique to each provider. 
 ##### 2.2.1.4 View Customer Stats
-A farmer will be able to view several statistics such as total revenue, total subscribers, and average ratings.
+A provider will be able to view several statistics such the total amount of subscribers, average ratings, and the overall progress of their customers. 
 
 #### 2.2.2 Actor: Customer
 ##### 2.2.2.1 Sign Up
