@@ -16,14 +16,14 @@ Table of Contents
 | ---- | ------- | ------------------- | --------- |
 |  Al  |10/8     | Initial Design      |    1      |
 |  MB  |10/16    | Initial Design      |    1      |
-|      |         |                     |           |
+|  ER  |10/16    | Initial Design      |    1      |
 
 ## 1. Product Overview
 SpartanFitness is web-based platform designed to help individuals of all fitness levels access structured training programs, workout resources, and progress tracking tools. Users can explore customized exercise routines, monitors their performance over time, and engage with a supportive community to stay motivated. Trainers can create and share personalized workout plans, track client achievements, and provide feedback directly through the system. The platform supports multiple user roles, including members, trainers, and administrators, each tailored tools to ensure an engaging effective, and goal-oritented fitness experience.
 
 ## 2. Use Cases
 ### 2.1 Use Case Model
-![Use Case Model](https://github.com/csc340-uncg/f25-team0/blob/main/doc/Object-Oriented-Design/use-case.png)
+![Use Case Model](use-case.png)
 
 ### 2.2 Use Case Descriptions
 
@@ -44,14 +44,14 @@ A provider will be able to view several statistics such the total amount of subs
 A customer can sign up to create their profile with their name, email, password, and address. Emails must be unique.
 ##### 2.2.2.2 Log In
 A customer shall be able to sign in using their registred email and password. After logging in, the customer shall be directed their dashboard where they see an overview of their subscriptions.
-##### 2.2.2.3 Browse Produce Boxes
-A customer shall be able to view available produce boxes. They can do this from the home page or using a search function. They can also filter boxes by name, descriptions, or farm. They will also be able to select one box and view more details.
-##### 2.2.1.4 Subscribe to Produce Box
-Upon selecting a box, a customer shall be able to subscribe for the box using a one-click action. This box will then appear on their dashboard, and they will be able to ammend the subscription.
-##### 2.2.1.5 Review Produce Box
-A customer may write a review for a box they subscribed to. They will be able to rate the box based on freshness and delivery.
+##### 2.2.2.3 Browse Workouts
+A customer shall be able to view available workout plans. They can do this from the workouts page or using a search function. They can also filter workouts by name, type, or trainer. They will also be able to select one workout and view more details.
+##### 2.2.1.4 Subscribe to Workouts
+Upon selecting a workout, a customer shall be able to subscribe for the workout using a one-click action. This workout will then appear on their dashboard, and they will be able to ammend the subscription.
+##### 2.2.1.5 Review Workouts
+A customer may write a review for a workout plan they subscribed to. They will be able to rate the workout with a out of 5 points system.
 
 ## 3. UML Class Diagram
-![UML Class Diagram](https://github.com/csc340-uncg/f25-team0/blob/main/doc/Object-Oriented-Design/class-diagram.png)
+![UML Class Diagram](class-diagram.png)
 ## 4. Database Schema
-![UML Class Diagram](https://github.com/csc340-uncg/f25-team0/blob/main/doc/Object-Oriented-Design/schema.png)
+![UML Class Diagram](schema.png)
