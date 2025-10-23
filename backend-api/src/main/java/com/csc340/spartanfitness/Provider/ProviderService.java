@@ -2,6 +2,9 @@ package com.csc340.spartanfitness.Provider;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,7 +44,17 @@ public class ProviderService {
 
     public Provider getProviderByEmail(String email) {
         return providerRepository.findByEmail(email)
-            .orElseThrow(() -> new EntityNotFoundException("Provider not found"));
+        .orElseThrow(() -> new EntityNotFoundException("Provider not found"));
+    }
+    public void deleteProvider(Long id) {
+    if (!providerRepository.existsById(id)) {
+        throw new EntityNotFoundException("Provider not found");
+    }
+    providerRepository.deleteById(id);
+    }
+
+   public List<Provider> getAllProviders() {
+    return providerRepository.findAll();
     }
 }
     

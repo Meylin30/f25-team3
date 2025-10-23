@@ -2,11 +2,14 @@ package com.csc340.spartanfitness.Provider;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/provider")
+@RequestMapping("/api/providers")
 @RequiredArgsConstructor
 
 public class ProviderController {
@@ -27,4 +30,15 @@ private final ProviderService providerService;
     public ResponseEntity<Provider> getProvider(@PathVariable Long id) {
         return ResponseEntity.ok(providerService.getProviderById(id));
     }
+    @GetMapping
+    public ResponseEntity<List<Provider>> getAllProviders() {
+    return ResponseEntity.ok(providerService.getAllProviders());
+    }   
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProvider(@PathVariable Long id) {
+    providerService.deleteProvider(id);
+    return ResponseEntity.noContent().build();
+    }
+
 }
