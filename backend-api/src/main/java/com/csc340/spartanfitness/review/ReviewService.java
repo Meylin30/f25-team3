@@ -1,8 +1,8 @@
 package com.csc340.spartanfitness.review;
 
 import com.csc340.spartanfitness.customer.Customer;
-import com.csc340.spartanfitness.trainer.Trainer;
-import com.csc340.spartanfitness.workout.Workout;
+import com.csc340.spartanfitness.Provider.Provider;
+import com.csc340.spartanfitness.WorkoutPlans.Workout;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class ReviewService {
     public double getAverageRating(Workout workout) {
         List<Review> reviews = reviewRepository.findByWorkout(workout);
         OptionalDouble average = reviews.stream()
-                .mapToDouble(review -> review.getRating() != null ? review.getOverallRating() : 0.0)
+                .mapToDouble(review -> review.getRating() != null ? review.getRating() : 0.0)
                 .average();
         return average.orElse(0.0);
     }
@@ -55,7 +55,7 @@ public class ReviewService {
     public List<Review> getReviewsByCustomer(Customer customer) {
         return reviewRepository.findByCustomer(customer);
     }
-    public List<Review> getReviewsByTrainer(Trainer trainer) {
+    public List<Review> getReviewsByTrainer(Provider trainer) {
         return reviewRepository.findByWorkoutTrainer(trainer);
     }
 }

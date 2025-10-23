@@ -13,7 +13,7 @@ import org.hibernate.boot.registry.classloading.spi.ClassLoaderService.Work;
 import org.springframework.cglib.core.Local;
 
 import com.csc340.spartanfitness.customer.Customer;
-import com.csc340.spartanfitness.workout.Workout;
+import com.csc340.spartanfitness.WorkoutPlans.Workout;
 
 @Data
 @NoArgsConstructor

@@ -1,8 +1,8 @@
 package com.csc340.spartanfitness.subscription;
 
 import com.csc340.spartanfitness.customer.CustomerService;
-import com.csc340.spartanfitness.trainer.TrainerService;
-import com.csc340.spartanfitness.workout.WorkoutService;
+import com.csc340.spartanfitness.Provider.ProviderService;
+import com.csc340.spartanfitness.WorkoutPlans.workoutService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,9 +18,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SubscriptionController {
     private final SubscriptionService subscriptionService;
-    private final WorkoutService workoutService;
+    private final workoutService workoutService;
     private final CustomerService customerService;
-    private final TrainerService trainerService;
+    private final ProviderService trainerService;
 
     @PostMapping
     public ResponseEntity<Subscription> createSubscription(@Valid @RequestBody Subscription subscription) {
@@ -50,6 +50,6 @@ public class SubscriptionController {
 
     @GetMapping("/trainer/{trainerId}")
     public ResponseEntity<List<Subscription>> getTrainerSubscriptions(@PathVariable Long trainerId) {
-        return ResponseEntity.ok(subscriptionService.getSubscriptionsByTrainer(trainerService.getTrainerById(trainerId)));
+        return ResponseEntity.ok(subscriptionService.getSubscriptionsByTrainer(trainerService.getProviderById(trainerId)));
     }
 }

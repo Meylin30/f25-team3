@@ -1,8 +1,8 @@
 package com.csc340.spartanfitness.subscription;
 
 import com.csc340.spartanfitness.customer.Customer;
-import com.csc340.spartanfitness.trainer.Trainer;
-import com.csc340.spartanfitness.workout.Workout;
+import com.csc340.spartanfitness.Provider.Provider;
+import com.csc340.spartanfitness.WorkoutPlans.Workout;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -48,7 +48,7 @@ public class SubscriptionService {
         return subscriptionRepository.findByWorkout(workout);
     }
 
-    public List<Subscription> getSubscriptionsByTrainer(Trainer trainer) {
+    public List<Subscription> getSubscriptionsByTrainer(Provider trainer) {
         return subscriptionRepository.findByWorkoutTrainer(trainer);
     }
 }

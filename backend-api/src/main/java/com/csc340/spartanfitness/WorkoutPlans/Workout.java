@@ -3,16 +3,17 @@ package com.csc340.spartanfitness.WorkoutPlans;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import java.math.BigDecimal;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import com.csc340.spartanfitness.Provider.Provider;
+import com.csc340.spartanfitness.subscription.Subscription;
+import com.csc340.spartanfitness.review.Review;
 
 @Data
 @NoArgsConstructor
