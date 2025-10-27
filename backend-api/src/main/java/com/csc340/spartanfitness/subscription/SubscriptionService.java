@@ -41,7 +41,7 @@ public class SubscriptionService {
     }
 
     public List<Subscription> getActiveSubscriptionsByCustomer(Customer customer) {
-        return subscriptionRepository.findByCustomerAndActive(customer);
+        return subscriptionRepository.findByCustomerAndActive(customer, true);
     }
 
     public List<Subscription> getSubscriptionsByWorkout(Workout workout) {
@@ -49,6 +49,6 @@ public class SubscriptionService {
     }
 
     public List<Subscription> getSubscriptionsByTrainer(Provider trainer) {
-        return subscriptionRepository.findByWorkoutTrainer(trainer);
+        return subscriptionRepository.findByWorkoutProvider(trainer);
     }
 }
