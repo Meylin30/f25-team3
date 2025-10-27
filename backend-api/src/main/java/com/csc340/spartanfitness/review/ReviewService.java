@@ -56,6 +56,6 @@ public class ReviewService {
         return reviewRepository.findByCustomer(customer);
     }
     public List<Review> getReviewsByTrainer(Provider trainer) {
-        return reviewRepository.findByWorkoutTrainer(trainer);
+        return reviewRepository.findByWorkoutProvider(trainer);
     }
 }

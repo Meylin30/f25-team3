@@ -13,6 +13,6 @@ import java.util.List;
 public interface ReviewRepository extends JpaRepository<Review, Long> {
     List<Review> findByWorkout(Workout workout);
     List<Review> findByCustomer(Customer customer);
-    List<Review> findByWorkoutTrainer(Provider trainer);
+    List<Review> findByWorkoutProvider(Provider provider);
     
 }
