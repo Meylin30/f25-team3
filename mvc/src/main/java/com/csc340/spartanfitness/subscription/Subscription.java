@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.time.LocalDateTime;
 
 import com.csc340.spartanfitness.customer.Customer;
-import com.csc340.spartanfitness.WorkoutPlans.Workout;
+import com.csc340.spartanfitness.workoutplans.Workout;
 
 @Data
 @NoArgsConstructor
@@ -40,11 +40,6 @@ public class Subscription {
 
     @NotNull
     private boolean active = true;
-}
 
-enum SubscriptionType {
-    ONE_TIME,
-    BIWEEKLY,
-    MONTHLY,
-    YEARLY
+    private LocalDateTime lastSessionDate;
 }

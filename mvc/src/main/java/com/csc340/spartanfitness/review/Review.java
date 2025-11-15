@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.time.LocalDateTime;
 
 import com.csc340.spartanfitness.customer.Customer;
-import com.csc340.spartanfitness.WorkoutPlans.Workout;
+import com.csc340.spartanfitness.workoutplans.Workout;
 
 @Data
 @NoArgsConstructor
@@ -43,7 +43,7 @@ public class Review {
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(columnDefinition = "TEXT")
-    private String trainerResponse;
+    private String providerResponse;
 
-    private LocalDateTime trainerResponseDate;   
+    private LocalDateTime providerResponseDate;   
 }
