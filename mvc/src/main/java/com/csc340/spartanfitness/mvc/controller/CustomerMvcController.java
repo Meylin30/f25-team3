@@ -81,7 +81,7 @@ public class CustomerMvcController {
 
     @GetMapping("/profile/edit")
     public String editProfileForm(HttpSession session, Model model) {
-        Long customerId = (Long) session.getAttribute("custoemrId");
+        Long customerId = (Long) session.getAttribute("customerId");
         if(customerId == null) {
             return "redirect:/signin";
         }

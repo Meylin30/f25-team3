@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
-    <link rel="stylesheet" href="/customer-style.css">
+    <link rel="stylesheet" href="/css/customer-style.css">
 </head>
 <body>
     <header>
@@ -27,12 +27,6 @@
         </#if>    
         </nav>
         <div class="container">
-            <form action="">
-                <input type="search" name="" placeholder="Search here..." id="search-box">
-                <label for="search-box" class="fas fa-search"></label>
-            </form>
-        </div>
-        <div class="container">
                 <form action="">
                     <input type="search" name="" placeholder="Search here..." id="search-box">
                     <label for="search-box" class="fas fa-search"></label>
@@ -47,7 +41,7 @@
                 <a href="customers/explore" class="btn">Explore Workouts</a>
                 <#if providerId??>
                 <a href="providers/workouts" class="btn">Create Workout</a>
-                <#/if>
+                </#if>
             </div>
 
             <div class="image">

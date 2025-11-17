@@ -124,7 +124,7 @@ header .fas.fa-search {
     display: flex;
     align-items: center;
     min-height: 100vh;
-    background: url(https://as2.ftcdn.net/v2/jpg/04/48/54/67/1000_F_448546779_u9uNrL4FAZaVH1nqvHksMtQa9tVXi6LT.jpg) no-repeat;
+    background: url(https://plus.unsplash.com/premium_photo-1726097593777-8ee817fa11a8?q=80&w=2942&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D) no-repeat center center / cover;
 }
 
 .home .content {
