@@ -72,7 +72,7 @@ public String createWorkout(
 }
 
 //  Edit Workout 
-    @GetMapping("/workouts/{workoutId}/edit")
+    @GetMapping("/{providerId}/workouts/{workoutId}/edit")
     public String editWorkoutForm(@PathVariable Long providerId,
                                   @PathVariable Long workoutId,
                                   Model model) {
@@ -83,7 +83,7 @@ public String createWorkout(
         return "provider/edit-workout";  
     }
 
-    @PostMapping("/workouts/${workout.id}/edit")
+    @PostMapping("{providerId}/workouts/{workoutId}/edit")
     public String editWorkout(@PathVariable Long providerId,
                               @PathVariable Long workoutId,
                               @Valid @ModelAttribute("workout") Workout workoutDetails,
@@ -155,7 +155,7 @@ public String createWorkout(
         try {
             Provider provider = providerService.authenticate(email, password);
             session.setAttribute("providerId", provider.getId());
-            return "redirect:/providers/dashboard";
+            return "redirect:/providers/{providerId}/dashboard";
         } catch (Exception e) {
             return "redirect:/signin?error";
         }
