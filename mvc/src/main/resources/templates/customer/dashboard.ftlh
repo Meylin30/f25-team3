@@ -16,6 +16,7 @@
                 <a href="/customers/explore">Workouts</a>
                 <a href="/customers/dashboard">Profile</a>
                 <a href="/customers/logout">Logout</a>
+
         <#else>
             <a href="/signin">Sign In</a>
             <a href="/signup">Sign Up</a>
