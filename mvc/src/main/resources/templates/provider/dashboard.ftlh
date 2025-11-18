@@ -12,6 +12,7 @@
 
 <div class="header__wrapper">
     <header></header>
+    </header>
 
     <div class="col__container">
 
@@ -36,7 +37,7 @@
             <a href="/providers/${provider.id}/edit" class="btn-1">Edit Profile</a>
 
             <ul class="programs">
-                <li><a href="/providers/${provider.id}/workouts">Workout Plans</a></li>
+                <li><a href="/providers/workouts">Workout Plans</a></li>
             </ul>
 
         </div>
@@ -62,20 +63,23 @@
             <section class="workouts-section">
                 <h3>Workout Plans</h3>
 
-                <#if provider.workoutPlans?size == 0>
-                    <p>No workout plans created yet.</p>
-                <#else>
-                    <ul class="workout-list">
-                        <#list provider.workoutPlans as w>
-                            <li>
-                                <strong>${w.title!"Untitled Plan"}</strong><br>
-                                <span>${w.description!"No description"}</span>
-                            </li>
-                        </#list>
-                    </ul>
-                </#if>
+<#list provider.workoutPlans as w>
+    <li class="workout-item">
 
-                <a href="/providers/${provider.id}/workouts/create" class="btn-1">
+        <strong>${w.title!"Untitled Plan"}</strong><br>
+        <span>${w.description!"No description"}</span>
+
+        <br>
+
+        <a href="providers/workouts/{workoutId}/edit" class="btn-1 small-btn">
+            Edit
+        </a>
+
+    </li>
+</#list>
+
+
+                <a href="/providers/workouts/create" class="btn-1">
                     Create New Workout Plan
                 </a>
             </section>

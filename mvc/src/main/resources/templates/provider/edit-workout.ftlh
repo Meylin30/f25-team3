@@ -9,7 +9,7 @@
 <div class="card">
     <h1>Edit Workout</h1>
 
-    <form action="/providers/${provider.id}/workouts/${workout.id}/update" method="post">
+    <form action="/providers/workouts/${workout.id}/edit" method="post">
         <div class="input-box">
             <input type="text" name="title" value="${workout.title!}" required>
         </div>

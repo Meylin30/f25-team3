@@ -12,10 +12,10 @@
     <header>
         <a href="/" class="logo">Spartan Fitness<span>.</span></a>       
         <nav class="navbar>
-        <#if customerId??>
-                <a href="/customers/explore">Workouts</a>
-                <a href="/customers/dashboard">Profile</a>
-                <a href="/customers/logout">Logout</a>
+        <#if providerId??>
+                <a href="/providers/workouts-list">Workouts</a>
+                <a href="/providers/dashboard">Profile</a>
+                <a href="/providers/logout">Logout</a>
         <#else>
             <a href="/signin">Sign In</a>
             <a href="/signup">Sign Up</a>
