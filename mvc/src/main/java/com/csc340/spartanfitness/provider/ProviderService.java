@@ -8,6 +8,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.csc340.spartanfitness.customer.Customer;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -55,6 +57,16 @@ public class ProviderService {
 
    public List<Provider> getAllProviders() {
     return providerRepository.findAll();
+    }
+     public Provider authenticate(String email, String password) {
+        Provider provider = providerRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid email or password"));
+        
+        if (!provider.getPassword().equals(password)) {
+            throw new IllegalArgumentException("Invalid email or password");
+        }
+
+        return provider;
     }
 }
     

@@ -1,26 +1,29 @@
 package com.csc340.spartanfitness.workoutplans;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import com.csc340.spartanfitness.provider.Provider;
 
-@RestController
-@RequestMapping("/api/workout-plans")
+@Service
 @RequiredArgsConstructor
+@Transactional
 
 public class WorkoutService {
    private final WorkoutRepository workoutRepository;
 
-    // Create a new workout
-    public Workout createWorkout(Workout workout) {
+    // Create a new workout for a specific provider
+    public Workout createWorkout(Provider provider, Workout workout) {
+        workout.setProvider(provider);  
         return workoutRepository.save(workout);
     }
 
-    // Update an existing workout
     public Workout updateWorkout(Long id, Workout workoutDetails) {
         Workout workout = workoutRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Workout not found"));
@@ -33,7 +36,6 @@ public class WorkoutService {
         return workoutRepository.save(workout);
     }
 
-    //  Delete a workout by ID
     public void deleteWorkout(Long id) {
         if (!workoutRepository.existsById(id)) {
             throw new EntityNotFoundException("Workout not found");
@@ -41,24 +43,21 @@ public class WorkoutService {
         workoutRepository.deleteById(id);
     }
 
-    // Get a workout by ID
     public Workout getWorkoutById(Long id) {
         return workoutRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Workout not found"));
     }
 
-    // Get all workouts
     public List<Workout> getAllWorkouts() {
         return workoutRepository.findAll();
     }
 
-    // Get all active workouts
     public List<Workout> getActiveWorkouts() {
         return workoutRepository.findByActiveTrue();
     }
 
-    // Get all active workouts for a specific provider
     public List<Workout> getWorkoutsByProvider(Provider provider) {
         return workoutRepository.findByProviderAndActiveTrue(provider);
     }
+
 }
