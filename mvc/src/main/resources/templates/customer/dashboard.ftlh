@@ -11,7 +11,7 @@
 
     <header>
         <a href="/" class="logo">Spartan Fitness<span>.</span></a>       
-        <nav class="navbar>
+        <nav class="navbar">
         <#if customerId??>
                 <a href="/customers/explore">Workouts</a>
                 <a href="/customers/dashboard">Profile</a>
@@ -35,7 +35,7 @@
             <i class="fas fa-user-circle"></i>
             </div>
         <div class="info">
-            <h2>John Smith</h2>
+            <h2>${customer.name!}</h2>
             <p>Member since 2023 • Goal: Build muscle</p>
         </div>
         </div>
@@ -49,11 +49,12 @@
         <!-- TAB 1 -->
         <div class="tab-content" id="user-info">
           <h3>User Information</h3>
-          <p><strong>Age:</strong> 28</p>
-          <p><strong>Height:</strong> 5'6"</p>
-          <p><strong>Weight:</strong> 135 lbs</p>
-          <p><strong>Diet:</strong> Vegetarian</p>
-          <p><strong>Injuries:</strong> None</p>
+          <!--
+          <p><strong>Email:</strong> ${customer.email! 'NA'}</p>
+          <p><strong>Date of Birth:</strong> ${customer.dob?string("MM/dd/yyyy")! 'NA'}</p>
+          <p><strong>Height:</strong> ${customer.height! 'NA'}</p>
+          <p><strong>Weight:</strong> ${customer.weight! 'NA'}</p>
+          -->
         </div>
     
         <!-- TAB 2 -->
@@ -61,17 +62,27 @@
           <h3>Progress</h3>
           <p><strong>Weight Change:</strong> 140 lbs → 135 lbs</p>
           <p><strong>Workouts Completed:</strong> 52 this year</p>
-          <p><strong>Calories Burned:</strong> 24,000 kcal</p>
         </div>
     
         <!-- TAB 3 -->
         <div class="tab-content" id="workouts">
           <h3>Subscribed Workouts</h3>
+          <!--
+          <#if customer.subscriptions?? && customer.subscriptions?size gt 0>
           <ul>
-            <li>🏋️ Strength Training – Intermediate</li>
-            <li>🧘 Yoga for Flexibility</li>
-            <li>🏃‍♀️ 5K Running Plan</li>
+            <#list customer.subscriptions as subscription>
+              <li>
+                ${subscription.workout.name} – 
+                Started: ${subscription.startDate?string("yyyy-MM-dd HH:mm")} – 
+                Type: ${subscription.type}
+              </li>
+            </#list>
           </ul>
+          <#else>
+              <p>No subscribed workouts yet.</p>
+              <a href="/customers/explore" class="btn btn-primary">Browse Workouts</a>
+          </#if>
+          -->
         </div>
     </section>
         

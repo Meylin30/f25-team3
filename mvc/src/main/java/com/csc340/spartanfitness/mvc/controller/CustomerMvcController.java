@@ -12,13 +12,16 @@ import com.csc340.spartanfitness.subscription.SubscriptionType;
 import jakarta.servlet.http.HttpSession;
 
 import org.hibernate.boot.registry.classloading.spi.ClassLoaderService.Work;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -94,7 +97,7 @@ public class CustomerMvcController {
     @PostMapping("/profile/edit")
     public String UpdateProfile(@RequestParam String name,
                                 @RequestParam String email,
-                                @RequestParam(required = false) String age,
+                                @RequestParam String dob,
                                 @RequestParam(required = false) String weight,
                                 @RequestParam(required = false) String height,
                                 @RequestParam String currentPassword,
@@ -114,14 +117,15 @@ public class CustomerMvcController {
             Customer updatedCustomer = new Customer();
             updatedCustomer.setName(name);
             updatedCustomer.setEmail(email);
-            updatedCustomer.setAge(age != null && !age.trim().isEmpty()
-                 ? Integer.parseInt(age) : customer.getAge());
             updatedCustomer.setWeight(weight != null && !weight.trim().isEmpty()
                  ? new BigDecimal(weight).setScale(2, RoundingMode.HALF_UP) : customer.getWeight());
             updatedCustomer.setHeight(height != null && !height.trim().isEmpty()
                  ? height : customer.getHeight());     
             updatedCustomer.setPassword(newPassword != null && !newPassword.trim().isEmpty()
                  ? newPassword : customer.getPassword());
+            updatedCustomer.setDob(dob != null
+                 ? LocalDate.parse(dob, DateTimeFormatter.ISO_DATE) : customer.getDob()
+);
 
             customerService.updateCustomer(customerId, updatedCustomer);
             return "redirect:/customers/dashboard";
@@ -174,7 +178,7 @@ public class CustomerMvcController {
         return "redirect:/customers/dashboard";
     }
 
-    @GetMapping("/explore/{workoutid}/review")
+    @GetMapping("/explore/{workoutId}/review")
     public String reviewForm(@PathVariable Long workoutId, Model model, HttpSession session) {
         Long customerId = (Long) session.getAttribute("customerId");
         if(customerId == null) {
