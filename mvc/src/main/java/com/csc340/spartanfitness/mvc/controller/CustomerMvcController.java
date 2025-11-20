@@ -136,14 +136,14 @@ public class CustomerMvcController {
             return "redirect:/edit-profile";
         }
     }
-/* 
+
     @GetMapping("/explore")
     public String browseWorkouts(Model model) {
-        List<Workout> availableWorkouts + workoutService.getAvailableWorkouts();
+        List<Workout> availableWorkouts = workoutService.getActiveWorkouts();
         model.addAttribute("workouts", availableWorkouts);
         return "customer/explore";
     }
-*/
+
     @GetMapping("/explore/{id}")
     public String workoutDetails(@PathVariable Long id, Model model, HttpSession session) {
         Long customerId = (Long) session.getAttribute("customerId");
@@ -152,9 +152,12 @@ public class CustomerMvcController {
         }
 
         Workout workout = workoutService.getWorkoutById(id);
+        Customer customer = customerService.getCustomerById(customerId);
+        boolean subscribed = customer.getSubscriptions().stream()
+            .anyMatch(sub -> sub.isActive() && sub.getWorkout().getId().equals(id));
         model.addAttribute("workout", workout);
+        model.addAttribute("subscribed", subscribed);
         return "customer/workout-details";
-
     }
 
     @PostMapping("/explore/{id}/subscribe")
@@ -175,7 +178,7 @@ public class CustomerMvcController {
         subscription.setActive(true);
         subscriptionService.createSubscription(subscription);
 
-        return "redirect:/customers/dashboard";
+        return "redirect:/customers/explore/" + id;
     }
 
     @GetMapping("/explore/{workoutId}/review")
@@ -204,7 +207,7 @@ public class CustomerMvcController {
         return "customer/review-form";
     }
 
-    @PostMapping("/explore/{workoutid}/review")
+    @PostMapping("/explore/{workoutId}/review")
     public String submitReview(@PathVariable Long workoutId,
                                 @ModelAttribute Review review,
                                 @RequestParam Double rating,

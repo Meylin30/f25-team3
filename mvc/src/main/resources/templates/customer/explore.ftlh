@@ -95,7 +95,8 @@
         </div>
     </div>    
 
-    <script>
+    <#noparse>
+    <script defer>
         let currentSlide = 0;
         const slides = document.querySelectorAll('.carousel-item');
 
@@ -131,6 +132,6 @@
         document.getElementById(tabId).classList.add('active-tab-content');
         }
     </script>
-
+    </#noparse>
 </body>
 </html>
