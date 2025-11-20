@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,9 +43,9 @@ public class CustomerController {
         return ResponseEntity.ok(customerService.searchByName(name));
     }
 
-    @GetMapping("/search/age")
-    public ResponseEntity<List<Customer>> searchByAge(@RequestParam Integer age) {
-        return ResponseEntity.ok(customerService.searchByAge(age));
+    @GetMapping("/search/dob")
+    public ResponseEntity<List<Customer>> searchByDob(@RequestParam LocalDate dob) {
+        return ResponseEntity.ok(customerService.searchByDob(dob));
     }
 
     @DeleteMapping("/{id}")

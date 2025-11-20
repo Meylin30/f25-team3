@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -26,7 +27,7 @@ public class CustomerService {
 
         customer.setName(customerDetails.getName());
         customer.setEmail(customerDetails.getEmail());
-        customer.setAge(customerDetails.getAge());
+        customer.setDob(customerDetails.getDob());
         customer.setHeight(customerDetails.getHeight());
         customer.setWeight(customerDetails.getWeight());
 
@@ -47,8 +48,8 @@ public class CustomerService {
     }
 
 
-    public List<Customer> searchByAge(Integer age) {
-        return customerRepository.findByAge(age);
+    public List<Customer> searchByDob(LocalDate dob) {
+        return customerRepository.findByDob(dob);
     }
 
     public void deleteCustomer(Long id) {

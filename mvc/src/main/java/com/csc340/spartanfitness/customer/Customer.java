@@ -9,8 +9,11 @@ import lombok.NoArgsConstructor;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Data
@@ -38,11 +41,12 @@ public class Customer {
     @JsonIgnoreProperties("customer")
     private List<Subscription> subscriptions = new ArrayList<>();
 
-    private Integer age;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    private LocalDate dob;
     
     private String height;
     
-    @Column(precision = 5, scale = 2, nullable = false)
+    @Column(precision = 5, scale = 2)
     private BigDecimal weight;
 
     public Customer(Long id){

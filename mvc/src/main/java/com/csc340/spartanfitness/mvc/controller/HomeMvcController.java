@@ -49,7 +49,8 @@ public class HomeMvcController {
         }
 
         if (session.getAttribute("providerId") != null) {
-            return "redirect:/providers/dashboard";
+            Long id =(Long) session.getAttribute("providerId");
+            return "redirect:/providers/" + id + "dashboard";
         }
         
         return "signin";

@@ -155,9 +155,15 @@ public String createWorkout(
         try {
             Provider provider = providerService.authenticate(email, password);
             session.setAttribute("providerId", provider.getId());
-            return "redirect:/providers/{providerId}/dashboard";
+            return "redirect:/providers/" + provider.getId() + "/dashboard";
         } catch (Exception e) {
             return "redirect:/signin?error";
         }
+    }
+
+     @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute("providerId");
+        return "redirect:/";
     }
 }
