@@ -1,9 +1,13 @@
+
 :root {
     --main: #0F2044;
     --secondary: #FFB71B;
     --font: #FFFFFF;
     --font-secondary: #BEC0C2;
+    --card-bg: rgba(255, 255, 255, 0.05);
+    --card-border: rgba(255, 255, 255, 0.2);
 }
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 
 * {
@@ -11,605 +15,499 @@
     padding: 0;
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
-    
 }
 
-
-body.register {
-    display: flex;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
-    font-size: 10px;
+body {
     background: var(--main);
+    color: var(--font);
+    line-height: 1.6;
 }
 
-.container{
-    max-width: 700px;
-    width: 100%;
-    background: #fff;
-    padding: 25px 30px;
-    border-radius: 5px;
-}
-.container .title{
-    font-size: 25px;
-    font-weight: 500;
-    position: relative;
-}
-.container .title::before{
-    content: "";
-    position: absolute;
-    left:0; bottom:0;
-    height: 3px;
-    width: 30px;
-    border-radius: 5px;
-    background: var(--secondary);   
-}
-
-.container form .user-details{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin: 20px 0 12px 0;
-}
-form .user-details .input-box1{
-    margin-bottom: 15px;
-    width: calc(100% / 2 - 20px);
-}
-
-.user-details .input-box1 .details{
-    display: block;
-    font-weight: 600;
-    margin-bottom: 8px;
-
-}
-.user-details .input-box1 input{
-    height: 25px;
-    width: 100%;
-    outline: none;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    padding-left: 15px;
-    font-size: 16px;
-    border-bottom-width: 2px;   
-    transition: all 0.3s ease;
-}
-.user-details .input-box1 input:focus,
-.user-details .input-box1 input:valid{
-    border-color: black;
-}
-
-.gender-details .gender-title{
-    font-size: 15px;
-    font-weight: 500;   
-}
-form .gender-details .category{
-    display: flex;
-    width: 80%;
-    margin: 14px 0;
-    justify-content: space-between;
-
-}
-.gender-details .category label{
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-}
-.gender-details .category .dot{
-    height: 18px;
-    width: 18px;
-    background: #d9d9d9;
-    border-radius: 50%;
-    margin-right: 8%;
-    border: 5px solid transparent;
-    transition: all 0.3s ease;
-}
-#dot-1:checked ~ .category label .one,
-#dot-2:checked ~ .category label .two{
-    border-color: var(--secondary);
-    background: var(--secondary);
-}
-
-form input[type="radio"]{
-    display: none;
-}
-form .button{
-    height: 45px;
-    margin: 35px 0
-}
-form .button input{
-    height: 100%;
-    width: 130%;
-    outline: none;
-    border-radius: 5px;
-    border: none;
-    color: #fff;
-    font-size: 18px;
-    font-weight: 500;
-    letter-spacing: 1px;
-    cursor: pointer;
+/* -------------------
+   GENERAL BUTTONS
+------------------- */
+.btn-1, .small-btn {
+    display: inline-block;
     background: var(--main);
-}
-form .button input:hover{
-    background: var(--secondary);
-}
-
-
-
-body.login {
-display: flex;
-justify-content: center;
-align-items: center;
-width: 100%;
-height: 100vh;
-background:var(--main);
-background-size: cover;
-background-position: center;
-}
-
-.wrapper{
-    width: 420px;
-    background: transparent;
-    border: 2px solid rgba(255,255,255,.2);
-    backdrop-filter: blur(20px);
-    color: #fff;
-    border-radius: 10px;
-    padding: 30px 40px 40px;
-}
-.wrapper h1{
-    font-size: 36px;
-    text-align: center;
-}
-
-.wrapper .input-box{
-    position: relative;
-    width: 100%;
-    height: 50px;
-    margin: 30px 0;
-}
-
-.input-box input{
-    width: 100%;
-    border-radius: .5rem;
-    border: 1.5rem solid pink;
-    box-shadow: 0 .5rem 1rem rgba(0,0,0,.1);
-    height: 100%;
-    background: transparent;
-    border: 2px solid rgba(255,255,255,.2);
-    outline: none;
-    border-radius: 40px;
-    font-size: 16px;
-    color: #fff;
-    padding: 20px 45px;
-}
-
-.input-box input::placeholder{
-    color: #fff;
-}
-
-.wrapper .remember-forgot{
-    font-size: 14px;
-    margin: -15px 0 15px;
-    display: flex;  
-    justify-content: space-between;
-}
-
-.wrapper .remember-forgot label input{
-    margin-right: 3px;
-    accent-color: var(--secondary);
-}   
-
-.wrapper .remember-forgot a{
-    color: #fff;
+    color: var(--font);
+    padding: 8px 15px;
+    border-radius: 6px;
     text-decoration: none;
-}
-.wrapper .remember-forgot a:hover{
-    text-decoration: underline;
-    color: var(--secondary);
-}
-.btn{ 
-    width: 100%;
-    height: 45px;
-    background: #fff;
-    border: none;
-    outline: none;
-    border-radius: 40px;
-    box-shadow: 0 0 10px rgba(0,0,0,.1);
-    font-size: 16px;
-    color: #333;
-    cursor: pointer;
-    font-weight: 600;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+    border: 1px solid var(--secondary);
 }
 
-.wrapper .register-link{
-    text-align: center;
-    font-size: 10px;
-    margin-top: 20px;
-}
-.wrapper .register-link a{
-    color: #fff;
-    text-decoration: none;      
-    font-weight: 600;   
-}
-
-.register-link a:hover{
-    text-decoration: underline; 
-}
-
-.btn:hover{
+.btn-1:hover, .small-btn:hover {
     background: var(--secondary);
+    color: var(--main);
 }
 
-
-
-
-
-
-
-body.profile {
-  font-family: 'Arial', sans-serif;
-  background: var(--main);
-  color: #333;
-  line-height: 1.6;
-}
-
-
+/* -------------------
+   HEADER WRAPPER (DASHBOARD)
+------------------- */
 .header__wrapper {
-  width: 90%;
-  max-width: 1200px;
-  margin: 40px auto;
-  background:  var(--secondary);
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow: var(--main);
-  display: flex;
-  flex-direction: column;
+    max-width: 1200px;
+    margin: 40px auto;
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
-.col__container {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-
+/* -------------------
+   LEFT COLUMN
+------------------- */
 .col__left {
-  flex: 1;
-  min-width: 280px;
-  max-width: 350px;
-  background: white;
-  padding: 25px;
-  text-align: center;
+    flex: 1;
+    min-width: 280px;
+    max-width: 300px;
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
 }
 
 .img__container img {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  border: 4px solid var(--main);
-  object-fit: cover;
-  margin-bottom: 15px;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid var(--secondary);
+    object-fit: cover;
+    margin-bottom: 10px;
 }
 
 .col__left h2 {
-  margin-bottom: 5px;
-  font-size: 22px;
-  font-weight: bold;
+    font-size: 22px;
+    margin-bottom: 5px;
 }
 
 .col__left p {
-  color: black ;
-  font-size: 14px;
-  margin-bottom: 15px;
-}
-
-
-.social__icons {
-  margin: 10px 0;
+    font-size: 14px;
+    color: var(--font-secondary);
+    margin-bottom: 15px;
 }
 
 .social__icons a {
-  display: inline-block;
-  margin: 0 8px;
-  color: var(--main);
-  font-size: 18px;
-  transition: 0.3s;
+    margin: 0 5px;
+    color: var(--font);
+    font-size: 16px;
+    transition: color 0.3s ease;
 }
 
 .social__icons a:hover {
-  color: var(--secondary);
+    color: var(--secondary);
 }
-
-
-button, .btn-1 {
-  margin-top: 15px;
-  padding: 10px 20px;
-  background: var(--main);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-button:hover, .btn-1:hover {
-  background: var(--secondary);
-}
-
 
 .programs {
-  margin-top: 20px;
-  list-style: none;
-  padding: 0;
+    margin-top: 15px;
+    list-style: none;
+    padding: 0;
 }
 
-.programs li {
-  margin: 8px 0;
+.programs li a {
+    display: block;
+    background: var(--card-bg);
+    color: var(--secondary);
+    padding: 8px 0;
+    margin-bottom: 8px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
 }
 
-.programs a {
-  display: block;
-  padding: 10px 15px;
-  background: #fff;
-  border: 2px solid var(--main);
-  border-radius: 8px;
-  text-align: center;
-  font-weight: 600;
-  color: var(--secondary);
-  text-decoration: none;
-  transition: all 0.3s ease;
+.programs li a:hover {
+    background: var(--secondary);
+    color: var(--main);
 }
 
-.programs a:hover {
-  background: white;
-  color: var(--main);
-}
-
+/* -------------------
+   RIGHT COLUMN
+------------------- */
 .right__col {
-  flex: 2;
-  padding: 25px;
+    flex: 2;
+    min-width: 400px;
+    max-width: 700px;
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    border-radius: 12px;
+    padding: 20px;
 }
 
 .right__col nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 25px;
-}
-
-.right__col nav ul {
-  list-style: none;
-  display: flex;
-  gap: 20px;
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
 }
 
 .right__col nav a {
-  text-decoration: none;
-  color: #333;
-  font-weight: 600;
-  transition: color 0.3s;
+    color: var(--font);
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background 0.3s ease;
 }
 
+.right__col nav a.active,
 .right__col nav a:hover {
-  color: white;
+    background: var(--secondary);
+    color: var(--main);
 }
 
-
-.about h2,
-.services h2,
-.reviews h2 {
-  font-size: 20px;
-  margin-bottom: 10px;
-  color: black;
+/* -------------------
+   ACCOUNT INFO
+------------------- */
+.provider-info-box {
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
 }
 
-.about p {
-  margin-bottom: 20px;
+.provider-info-box h3 {
+    margin-bottom: 10px;
+    color: var(--secondary);
 }
 
-
-.services ul {
-  list-style: disc;
-  padding-left: 20px;
-  margin-bottom: 25px;
+.provider-info-box p {
+    margin-bottom: 8px;
 }
 
+/* -------------------
+   WORKOUTS SECTION
+------------------- */
+.workouts-section {
+    margin-bottom: 20px;
+}
 
-.reviews {
-  background: #f9f9f9;
-  padding: 15px;
-  border-radius: 10px;
+.workouts-section h3 {
+    margin-bottom: 10px;
+    color: var(--secondary);
+}
+
+.workout-item {
+    background: rgba(255,255,255,0.1);
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-left: 4px solid var(--secondary);
+    border-radius: 6px;
+}
+
+/* -------------------
+   REVIEWS SECTION
+------------------- */
+.reviews-section h3 {
+    margin-bottom: 10px;
+    color: var(--secondary);
 }
 
 .review {
-  margin-bottom: 15px;
-  padding: 10px;
-  border-left: 4px solid var(--secondary);
-  background: #fff;
-  border-radius: 6px;
+    background: rgba(255,255,255,0.1);
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-left: 4px solid var(--secondary);
+    border-radius: 6px;
 }
 
 .review p {
-  margin-bottom: 5px;
-  font-style: italic;
+    font-style: italic;
+    margin-bottom: 5px;
 }
 
 .review span {
-  font-size: 13px;
-  color: #666;
-}
-.leave-review {
-  margin-top: 30px;
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    font-size: 13px;
+    color: var(--font-secondary);
 }
 
-.leave-review h2 {
-  margin-bottom: 15px;
-  color: var(--main);
+/* -------------------
+   FORMS (CREATE/EDIT WORKOUTS)
+------------------- */
+.card {
+    background: rgba(255,255,255,0.05);
+    border: 2px solid rgba(255,255,255,0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 30px 25px;
+    max-width: 450px;
+    margin: 50px auto;
+    text-align: center;
 }
 
-.leave-review form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+.card h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
 }
 
-.leave-review label {
-  font-weight: 600;
-  margin-bottom: 5px;
+.input-box {
+    margin-bottom: 15px;
 }
 
-.leave-review input,
-.leave-review select,
-.leave-review textarea {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 14px;
-  width: 100%;
+.input-box input, 
+.input-box textarea, 
+.input-box select {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--card-border);
+    background: rgba(255,255,255,0.1);
+    color: var(--font);
+    font-size: 14px;
 }
 
-.leave-review button {
-  padding: 12px;
-  background: var(--main);
-  border: none;
-  border-radius: 6px;
-  color: #fff;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.3s ease;
+.input-box textarea {
+    min-height: 80px;
+    resize: vertical;
 }
 
-.leave-review button:hover {
-  background: var(--secondary);
-}
-.progress {
-  margin-top: 40px;
-  padding: 20px;
-  background: rgba(255,255,255,0.05);
-  border-radius: 12px;
+.input-box select {
+    color: var(--font);
+    background: rgba(255,255,255,0.1);
 }
 
-.progress h2 {
-  margin-bottom: 20px;
-  color: var(--secondary); /* matches UNCG gold */
+.button input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: var(--secondary);
+    color: var(--main);
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.progress-summary {
-  display: flex;
-  gap: 20px;
-  margin-bottom: 30px;
-  flex-wrap: wrap;
+.button input:hover {
+    background: #e6a317;
 }
 
-.progress-item {
-  background: rgba(255,255,255,0.1);
-  padding: 15px;
-  border-radius: 8px;
-  flex: 1;
-  min-width: 150px;
-  text-align: center;
+/* -------------------
+   BACK LINK
+------------------- */
+.back-link {
+    display: inline-block;
+    margin-top: 15px;
+    text-decoration: none;
+    color: var(--font);
+    padding: 8px 15px;
+    border-radius: 6px;
+    border: 1px solid var(--secondary);
+    transition: all 0.3s ease;
 }
 
-.progress-item h3 {
-  margin-bottom: 8px;
-  color: var(--font);
+.back-link:hover {
+    background: var(--secondary);
+    color: var(--main);
 }
 
-.progress-form label {
-  display: block;
-  margin-top: 10px;
-  margin-bottom: 5px;
-  font-size: 0.9rem;
-  color: var(--font-secondary);
+/* -------------------
+   EDIT PROFILE
+------------------- */
+.edit-profile-container {
+    max-width: 450px;
+    margin: 50px auto;
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    padding: 25px;
+    border-radius: 12px;
 }
 
-.progress-form input {
-  width: 100%;
-  padding: 10px;
-  border: none;
-  border-radius: 6px;
-  margin-bottom: 10px;
-  color: var(--main);
+.edit-profile-container h2 {
+    margin-bottom: 20px;
+    color: var(--secondary);
+    text-align: center;
 }
 
-.progress-form button {
-  margin-top: 10px;
-  padding: 12px;
-  width: 100%;
-  background: var(--secondary);
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  color: var(--main);
-  cursor: pointer;
-  transition: background 0.3s ease;
+.edit-profile-container label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: 500;
 }
 
-.progress-form button:hover {
-  background: #e6a317;
+.edit-profile-container input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--card-border);
+    margin-bottom: 15px;
+    background: rgba(255,255,255,0.1);
+    color: var(--font);
+}
+
+.edit-profile-container .btn-1 {
+    width: 48%;
+    display: inline-block;
+    text-align: center;
+}
+
+.edit-profile-container .btn-1:hover {
+    background: var(--secondary);
+    color: var(--main);
 }
 
 
+/* =========================
+   Edit Workout Page - Fitness Style
+   ========================= */
 
+body.edit-workout {
+    font-family: 'Poppins', sans-serif;
+    background: #0F2044; /* dark blue fitness vibe */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #fff;
+    margin: 0;
+}
 
- body.workout {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      height: 100vh;
-      background: var(--main);
-      background-size: cover;
-      background-position: center;
-      margin: 0;
-      font-family: Arial, sans-serif;
-      color: #fff;
-    }
-    .card {
-      width: 420px;
-      background: rgba(255, 255, 255, 0.1);
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(20px);
-      border-radius: 10px;
-      padding: 30px 40px 40px;
-      box-sizing: border-box;
-      text-align: center;
-    }
-    .card h1 {
-      font-size: 36px;
-      margin-bottom: 20px;
-    }
-    .card p {
-      font-size: 16px;
-      margin-bottom: 20px;
-      line-height: 1.4;
-    }
-    ul {
-      text-align: left;
-      padding-left: 20px;
-      margin-bottom: 30px;
-    }
-    ul li {
-      margin-bottom: 10px;
-      font-size: 15px;
-    }
-    a.back-link {
-      display: inline-block;
-      padding: 10px 20px;
-      background: #fff;
-      color: #333;
-      border-radius: 40px;
-      text-decoration: none;
-      font-weight: 600;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      transition: background 0.3s ease, color 0.3s ease;
-    }
-    a.back-link:hover {
-      background: var(--secondary);
-      color: #fff;
-    }
+.edit-workout-container {
+    background: #1a2a5c; /* slightly lighter dark background */
+    padding: 50px 40px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 700px;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+    text-align: center;
+}
+
+.edit-workout-container h1 {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    color: #FFB71B; /* fitness highlight color */
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+}
+
+.edit-input-box {
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.edit-input-box label {
+    display: block;
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.edit-input-box input,
+.edit-input-box textarea,
+.edit-input-box select {
+    width: 100%;
+    padding: 18px 20px;
+    font-size: 18px;
+    border-radius: 12px;
+    border: none;
+    outline: none;
+    background: #2a3a70;
+    color: #fff;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.edit-input-box input:focus,
+.edit-input-box textarea:focus,
+.edit-input-box select:focus {
+    background: #344a8a;
+    box-shadow: 0 0 10px #FFB71B;
+}
+
+.edit-input-box textarea {
+    min-height: 100px;
+}
+
+.edit-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.btn-save,
+.btn-delete {
+    flex: 1;
+    padding: 18px 0;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 12px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-save {
+    background: #FFB71B;
+    color: #0F2044;
+}
+
+.btn-save:hover {
+    background: #e6a317;
+}
+
+.btn-delete {
+    background: #ff4d4d;
+    color: #fff;
+}
+
+.btn-delete:hover {
+    background: #ff1a1a;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 35px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #FFB71B;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.back-link:hover {
+    color: #fff;
+}
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-1 {
+    flex: 1;
+    height: 45px;
+    background: var(--main);
+    color: #fff;
+    border: none;
+    border-radius: 40px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-1:hover {
+    background: var(--secondary);
+}
+
+.btn-delete {
+    flex: 1;
+    height: 45px;
+    background: #e74c3c; /* red for destructive action */
+    color: #fff;
+    border: none;
+    border-radius: 40px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-delete:hover {
+    background: #c0392b;
+}
+
