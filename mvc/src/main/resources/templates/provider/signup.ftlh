@@ -1,99 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Provider Signup</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
-    <link rel="stylesheet" href="/css/customer-style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Provider Registration</title>
+
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 </head>
+
 <body>
 
-<header>
-    <a href="/" class="logo">Spartan Fitness<span>.</span></a>
-    <nav class="navbar">
-        <a href="/signin">Sign In</a>
-        <a href="/signup">Sign Up</a>
-    </nav>
-</header>
+ <div class="register-container">
+    
+    <h2>Provider Registration</h2>
 
-<main>
-    <div class="register-container">
-        <form id="signup-form" action="/providers/signup" method="post">
+    <form id="provider-signup-form" action="/providers/signup" method="post">
 
-            <div class="progress-dots">
-                <span class="dot active"></span>
-                <span class="dot"></span>
+        <div class="progress-dots">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+        </div>
+
+        <!-- STEP 1 -->
+        <div class="form-step active">
+            <h3 style="margin-bottom: 15px; color: var(--secondary); font-size: 20px;">Your Details</h3>
+
+            <label>Email</label>
+            <input type="email" name="email" required placeholder="Email">
+
+            <label>Name</label>
+            <input type="text" name="name" required placeholder="Full Name">
+
+            <label>Password</label>
+            <input type="password" name="password" required placeholder="Create Password">
+
+            <button type="button" class="next-btn btn-1">Next</button>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="form-step">
+            <h3 style="margin-bottom: 15px; color: var(--secondary); font-size: 20px;">Professional Info</h3>
+
+            <label>Bio</label>
+            <textarea name="bio" placeholder="Short bio (optional)"></textarea>
+
+            <label>Specialty</label>
+            <input type="text" name="specialty" placeholder="E.g., Strength Training">
+
+            <div class="button-group">
+                
+                <button type="submit" class="submit-btn btn-1">Create Account</button>
             </div>
+        </div>
 
-            <!-- Step 1 -->
-            <div class="form-step active">
-                <h2>Step 1: Account Info</h2>
+    </form>
 
-                <label>Email</label>
-                <input type="email" name="email" required placeholder="Enter your email">
-
-                <label>Name</label>
-                <input type="text" name="name" required placeholder="Enter your name">
-
-                <label>Password</label>
-                <input type="password" name="password" required placeholder="Enter password">
-
-                <div class="buttons">
-                    <div></div>
-                    <button type="button" class="next-btn">Next</button>
-                </div>
-            </div>
-
-            <!-- Step 2 -->
-            <div class="form-step">
-                <h2>Step 2: Security Info</h2>
-
-                <label>PIN (4–6 digits)</label>
-                <input type="text" name="pin" required placeholder="Enter security PIN">
-
-                <div class="buttons">
-                    <button type="button" class="prev-btn">Previous</button>
-                    <button type="submit" class="submit-btn">Create Account</button>
-                </div>
-            </div>
-
-        </form>
-    </div>
-</main>
+    <a href="/" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+</div>
 
 <script>
-    const form = document.getElementById('signup-form');
-    const steps = document.querySelectorAll('.form-step');
-    const nextBtns = document.querySelectorAll('.next-btn');
-    const prevBtns = document.querySelectorAll('.prev-btn');
-    const dots = document.querySelectorAll('.dot');
+const form = document.getElementById('provider-signup-form');
+const steps = Array.from(document.querySelectorAll('.form-step'));
+const nextBtns = document.querySelectorAll('.next-btn');
+const prevBtns = document.querySelectorAll('.prev-btn');
+const dots = document.querySelectorAll('.progress-dots .dot');
+let currentStep = 0;
 
-    let step = 0;
+function showStep(step) {
+    steps.forEach((s, i) => s.classList.toggle('active', i === step));
+    dots.forEach((d, i) => d.classList.toggle('active', i === step));
+}
 
-    function showStep(n) {
-        steps.forEach((s, i) => s.classList.toggle('active', i === n));
-        dots.forEach((d, i) => d.classList.toggle('active', i === n));
-    }
-
-    nextBtns.forEach(btn =>
-        btn.addEventListener('click', () => {
-            const inputs = steps[step].querySelectorAll('input');
-            for (let input of inputs) {
-                if (!input.checkValidity()) return input.reportValidity();
+nextBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const inputs = steps[currentStep].querySelectorAll('input, textarea');
+        for (const i of inputs) {
+            if (!i.checkValidity()) {
+                i.reportValidity();
+                return;
             }
-            step++;
-            showStep(step);
-        })
-    );
+        }
+        currentStep++;
+        showStep(currentStep);
+    });
+});
 
-    prevBtns.forEach(btn =>
-        btn.addEventListener('click', () => {
-            step--;
-            showStep(step);
-        })
-    );
+prevBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        currentStep--;
+        showStep(currentStep);
+    });
+});
+
+showStep(currentStep);
 </script>
 
 </body>
 </html>
+
+

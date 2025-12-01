@@ -151,17 +151,19 @@ public String deleteWorkout(@PathVariable Long providerId,
         return "redirect:/providers/" + id + "/dashboard";
     }
 
-      @GetMapping("/signup")
+    @GetMapping("/signup")
     public String signupForm(Model model) {
-        model.addAttribute("provider", new Provider());
-        return "provider/signin";
-    }
+    model.addAttribute("provider", new Provider());
+    return "provider/signup";  
+}
+
 
     @PostMapping("/signup")
     public String signup(@ModelAttribute Provider provider) {
-        providerService.createProvider(provider);
-        return "redirect:/signin";
-    }
+    providerService.createProvider(provider);
+    return "redirect:/signin";
+}
+
       @PostMapping("/signin")
     public String signin(@RequestParam String email, @RequestParam String password, HttpSession session) {
         try {
