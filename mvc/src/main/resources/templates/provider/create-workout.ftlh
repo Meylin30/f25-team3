@@ -46,7 +46,8 @@
       </div>
     </form>
 
-    <a href="/providers/dashboard" class="back-link">Back to Dashboard</a>
+    <a href="javascript:history.back()" class="back-link">Back to Dashboard</a>
+
   </div>
 </body>
 </html>

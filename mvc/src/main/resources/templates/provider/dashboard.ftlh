@@ -3,91 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <title>${title!"Provider Dashboard"}</title>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <link rel="stylesheet" href="/css/style.css">
 </head>
-
 <body class="profile">
 
 <div class="header__wrapper">
-    <header></header>
-    </header>
 
-    <div class="col__container">
+    <!-- LEFT COLUMN -->
+    <div class="col__left">
 
-        <div class="col__left">
+        <div class="img__container">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJq1STQvo8NE2C5hQKqkX1R-PDGWnKUl3beA&s"
+                 alt="${provider.name!"Provider"}">
+        </div>
 
-            <div class="img__container">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJq1STQvo8NE2C5hQKqkX1R-PDGWnKUl3beA&s"
-                     alt="${provider.name}">
-                <span></span>
-            </div>
+        <h2>${provider.name!"No Name"}</h2>
+        <p>Provider</p>
 
-            <h2>${provider.name}</h2>
-            <p>Provider</p>
+        <div class="social__icons">
+            <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+        </div>
 
-            <div class="social__icons">
-                <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                <a href="#"><i class="fa-brands fa-instagram"></i></a>
-            </div>
+        <a href="/providers/${provider.id}/edit" class="btn-1">Edit Profile</a>
+        <a href="/providers/logout" class="btn-1 logout-btn">Logout</a>
 
-            <!-- Edit Profile button -->
-            <a href="/providers/${provider.id}/edit" class="btn-1">Edit Profile</a>
 
-            <ul class="programs">
-                <li><a href="/providers/workouts">Workout Plans</a></li>
+        <ul class="programs">
+            <li><a href="/providers/workouts/create">Workout Plans</a></li>
+        </ul>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="right__col">
+
+        <!-- NAV -->
+        <nav>
+            <ul>
+                <li><a href="#" class="active">Overview</a></li>
+                <li><a href="/providers/workouts/create">Workout Plans</a></li>
+                <li><a href="/providers/${provider.id}/reviews">Reviews</a></li>
             </ul>
+        </nav>
 
-        </div>
+        <!-- ACCOUNT INFO -->
+        <section class="provider-info-box">
+            <h3>Account Information</h3>
 
-        <div class="right__col">
+            <p><strong>Name:</strong> ${provider.name!"N/A"}</p>
+            <p><strong>Email:</strong> ${provider.email!"N/A"}</p>
+            <p><strong>Overall Rating:</strong> ${provider.overallRating?string("0.0")}</p>
+        </section>
 
-            <nav>
-                <ul>
-                    <li><a href="#" class="active">Overview</a></li>
-                    <li><a href="/providers/${provider.id}/workouts">Workout Plans</a></li>
-                    <li><a href="/providers/${provider.id}/reviews">Reviews</a></li>
-                </ul>
-            </nav>
+        <!-- WORKOUT PLANS -->
+        <section class="workouts-section">
+            <h3>Workout Plans</h3>
 
-            <section class="provider-info-box">
-                <h3>Account Information</h3>
+            <#if provider.workoutPlans?? && provider.workoutPlans?size gt 0>
+                <#list provider.workoutPlans as w>
+                    <div class="workout-item">
+                        <strong>${w.title!"Untitled Plan"}</strong>
+                        <span>${w.description!"No description available."}</span>
 
-                <p><strong>Name:</strong> ${provider.name}</p>
-                <p><strong>Email:</strong> ${provider.email}</p>
-                <p><strong>Overall Rating:</strong> ${provider.overallRating?string("0.0")}</p>
-            </section>
+                        <div class="workout-actions">
+                            <!-- EDIT -->
+                            <a href="/providers/${provider.id}/workouts/${w.id}/edit"
+                               class="btn-1 small-btn">Edit</a>
 
-            <section class="workouts-section">
-                <h3>Workout Plans</h3>
+                            <!-- DELETE -->
+                            <form action="/providers/${provider.id}/workouts/${w.id}/delete" method="post">
+                                <button type="submit" class="btn-1 small-btn delete-btn">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </#list>
+            <#else>
+                <p>No workouts found.</p>
+            </#if>
 
-<#list provider.workoutPlans as w>
-    <li class="workout-item">
+            <a href="/providers/workouts/create" class="btn-1">Create New Workout Plan</a>
+        </section>
 
-        <strong>${w.title!"Untitled Plan"}</strong><br>
-        <span>${w.description!"No description"}</span>
+        <!-- REVIEWS -->
+        <section class="reviews-section">
+            <h3>Reviews</h3>
 
-        <br>
-
-        <a href="providers/workouts/{workoutId}/edit" class="btn-1 small-btn">
-            Edit
-        </a>
-
-    </li>
-</#list>
-
-
-                <a href="/providers/workouts/create" class="btn-1">
-                    Create New Workout Plan
-                </a>
-            </section>
-
-        </div>
+            <#if provider.reviews?? && provider.reviews?size gt 0>
+                <#list provider.reviews as review>
+                    <div class="review">
+                        <p>"${review.comment!"No comment"}"</p>
+                        <span>- ${review.userName!"Anonymous"}, ${review.rating!0}/5</span>
+                    </div>
+                </#list>
+            <#else>
+                <p>No reviews yet.</p>
+            </#if>
+        </section>
 
     </div>
 </div>
 
 </body>
 </html>
+
+
