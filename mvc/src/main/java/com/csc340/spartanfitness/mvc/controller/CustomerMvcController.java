@@ -23,6 +23,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/customers")
@@ -140,7 +141,21 @@ public class CustomerMvcController {
     @GetMapping("/explore")
     public String browseWorkouts(Model model) {
         List<Workout> availableWorkouts = workoutService.getActiveWorkouts();
+
         model.addAttribute("workouts", availableWorkouts);
+
+        model.addAttribute("beginnerWorkouts", availableWorkouts.stream()
+            .filter(w -> w.getFitnessLevel() == Workout.FitnessLevel.BEGINNER)
+            .toList());
+
+        model.addAttribute("intermediateWorkouts", availableWorkouts.stream()
+            .filter(w -> w.getFitnessLevel() == Workout.FitnessLevel.INTERMEDIATE)
+            .toList());
+
+        model.addAttribute("advancedWorkouts", availableWorkouts.stream()
+            .filter(w -> w.getFitnessLevel() == Workout.FitnessLevel.ADVANCED)
+            .toList());
+
         return "customer/explore";
     }
 
@@ -152,11 +167,23 @@ public class CustomerMvcController {
         }
 
         Workout workout = workoutService.getWorkoutById(id);
+        List<Review> allReviews = reviewService.getReviewsByWorkout(workout);
         Customer customer = customerService.getCustomerById(customerId);
         boolean subscribed = customer.getSubscriptions().stream()
             .anyMatch(sub -> sub.isActive() && sub.getWorkout().getId().equals(id));
+        double averageRating = reviewService.getAverageRating(workout);
+        String latestCustomerName = "Anonymous";    
         model.addAttribute("workout", workout);
+        model.addAttribute("reviews", allReviews);
         model.addAttribute("subscribed", subscribed);
+        model.addAttribute("averageRating", averageRating);
+
+        
+        if (!allReviews.isEmpty() && allReviews.get(0).getCustomer() != null && allReviews.get(0).getCustomer().getName() != null) {
+            latestCustomerName = allReviews.get(0).getCustomer().getName();
+            }
+        model.addAttribute("latestCustomerName", latestCustomerName);
+        
         return "customer/workout-details";
     }
 
@@ -190,6 +217,7 @@ public class CustomerMvcController {
 
         Customer customer = customerService.getCustomerById(customerId);
         Workout workout = workoutService.getWorkoutById(workoutId);
+        List<Review> allReviews = reviewService.getReviewsByWorkout(workout);
 
         boolean hasSubscription = customer.getSubscriptions().stream()
                 .anyMatch(sub -> sub.getWorkout().getId().equals(workoutId));
@@ -197,12 +225,23 @@ public class CustomerMvcController {
         if (!hasSubscription) {
             return "redirect:/customers/dashboard";
         }
+
+        List<Review> sortedByLatestReviews = allReviews.stream()
+        .sorted((r1, r2) -> r2.getCreatedAt().compareTo(r1.getCreatedAt()))
+        .collect(Collectors.toList());
+
+        sortedByLatestReviews.forEach(r -> {
+        if (r.getCustomer() != null) {
+            r.getCustomer().getName(); // just access it
+        }
+        });
         
         Review review = new Review();
         review.setCustomer(customer);
         review.setWorkout(workout);
         model.addAttribute("review", review);
         model.addAttribute("workout", workout);
+        model.addAttribute("sortedByLatestReviews", sortedByLatestReviews);
         
         return "customer/review-form";
     }
