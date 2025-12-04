@@ -122,7 +122,7 @@
         </div>
         <div class="info">
             <h2>${customer.name}</h2>
-            <p>Member since 2023 • Goal: Build muscle</p>
+            <a href="/customers/profile/edit" class="btn">Edit Profile</a>
         </div>
       </div>
 

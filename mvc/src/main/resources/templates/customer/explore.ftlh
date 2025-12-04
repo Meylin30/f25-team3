@@ -59,40 +59,52 @@
         <h2>Workout Categories</h2>
 
         <div class="tab-buttons">
-            <div class="tab-button active-tab" data-tab="strength" onclick="showWorkoutTab('strength')">Strength Training</div>
-            <div class="tab-button" data-tab="cardio" onclick="showWorkoutTab('cardio')">Cardio</div>
-            <div class="tab-button" data-tab="yoga" onclick="showWorkoutTab('yoga')">Yoga</div>
+            <div class="tab-button active-tab" data-tab="beginner" onclick="showWorkoutTab('beginner')">Beginner</div>
+            <div class="tab-button" data-tab="intermediate" onclick="showWorkoutTab('intermediate')">Intermediate</div>
+            <div class="tab-button" data-tab="advanced" onclick="showWorkoutTab('advanced')">Advanced</div>
+            <div class="tab-button" data-tab="all" onclick="showWorkoutTab('all')">All Workouts</div>
         </div>
 
-        <div class="tab-content active-tab-content" id="strength">
+        <div class="tab-content active-tab-content" id="beginner">
             <ul class="workout-links">
-                <li><a href="view-workout.html">Strength Plan</a> - 4-week full-body muscle-building plan</li>
-                <li><a href="#">Push Day</a> - Chest, shoulders, and triceps routine</li>
-                <li><a href="#">Pull Day</a> - Back and biceps hypertrophy workout</li>
-                <li><a href="#">Leg Day</a> - Quads, hamstrings, and glutes training</li>
-                <li><a href="#">Core Strength</a> - Abdominal and lower back focus</li>
+                <#list beginnerWorkouts as workout>
+                    <li>
+                        <a href="/customers/explore/${workout.id}">${workout.title}</a> - ${workout.description!""}
+                    </li>
+                </#list>
             </ul>
         </div>
 
-        <div class="tab-content" id="cardio">
+        <div class="tab-content" id="intermediate">
             <ul class="workout-links">
-                <li><a href="view-workout.html">HIIT Express</a> - 20-minute high-intensity interval session</li>
-                <li><a href="#">Treadmill Burn</a> - Endurance run for fat loss</li>
-                <li><a href="#">Jump Rope Blast</a> - Cardio circuit with jump rope</li>
-                <li><a href="#">Stair Climber Challenge</a> - Leg-intensive cardio routine</li>
-                <li><a href="#">Bodyweight Cardio</a> - No-equipment fat-burning workout</li>
+                <#list intermediateWorkouts as workout>
+                    <li>
+                        <a href="/customers/explore/${workout.id}">${workout.title}</a> - ${workout.description!""}
+                    </li>
+                </#list>
             </ul>
         </div>
 
-        <div class="tab-content" id="yoga">
+        <div class="tab-content" id="advanced">
             <ul class="workout-links">
-                <li><a href="view-workout.html">Morning Flow</a> - Gentle sequence to start your day</li>
-                <li><a href="#">Evening Wind Down</a> - Stretch and relax before bed</li>
-                <li><a href="#">Balance & Core</a> - Improve stability and strength</li>
-                <li><a href="#">Power Yoga</a> - More dynamic, strength-based flow</li>
-                <li><a href="#">Beginner's Guide</a> - Intro to yoga postures and breathing</li>
+                <#list advancedWorkouts as workout>
+                    <li>
+                        <a href="/customers/explore/${workout.id}">${workout.title}</a> - ${workout.description!""}
+                    </li>
+                </#list>
             </ul>
         </div>
+
+        <div class="tab-content" id="all">
+            <ul class="workout-links">
+                <#list workouts as workout>
+                    <li>
+                        <a href="/customers/explore/${workout.id}">${workout.title}</a> - ${workout.description!""}
+                    </li>
+                </#list>
+            </ul>
+        </div>
+
     </div>    
 
     <#noparse>
