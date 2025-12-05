@@ -3,6 +3,7 @@ package com.csc340.spartanfitness.mvc.controller;
 import com.csc340.spartanfitness.customer.Customer;
 import com.csc340.spartanfitness.provider.Provider;
 import com.csc340.spartanfitness.provider.ProviderService;
+import com.csc340.spartanfitness.review.ReviewService;
 import com.csc340.spartanfitness.workoutplans.Workout;
 import com.csc340.spartanfitness.workoutplans.Workout.FitnessLevel;
 import com.csc340.spartanfitness.workoutplans.WorkoutService;
@@ -22,18 +23,22 @@ public class ProviderMvcController {
      
     private final ProviderService providerService;
     private final WorkoutService workoutService;
+    private final ReviewService reviewService;
+
 
     
-  @GetMapping("/{id}/dashboard")
+@GetMapping("/{id}/dashboard")
 public String dashboard(@PathVariable Long id, Model model) {
     Provider provider = providerService.getProviderById(id);
     if (provider == null) {
-        return "redirect:/signin"; // or a proper error page
+        return "redirect:/signin";
     }
     model.addAttribute("provider", provider);
     model.addAttribute("workouts", workoutService.getWorkoutsByProvider(provider));
-    return "provider/dashboard";  
+    model.addAttribute("reviews", reviewService.getReviewsForProvider(provider));
+    return "provider/dashboard";
 }
+
 
 
     // Create Workout 
@@ -180,4 +185,27 @@ public String deleteWorkout(@PathVariable Long providerId,
         session.removeAttribute("providerId");
         return "redirect:/";
     }
+    @PostMapping("/{providerId}/reviews/{reviewId}/reply")
+public String replyToReview(@PathVariable Long providerId,
+                            @PathVariable Long reviewId,
+                            @RequestParam String providerResponse) {
+
+    reviewService.addProviderResponse(reviewId, providerResponse);
+    return "redirect:/providers/" + providerId + "/reviews";
+}
+
+@GetMapping("/{providerId}/reviews")
+public String viewProviderReviews(@PathVariable Long providerId, Model model) {
+    Provider provider = providerService.getProviderById(providerId);
+    model.addAttribute("provider", provider);
+    model.addAttribute("reviews", reviewService.getReviewsForProvider(provider));
+    return "provider/reviews";  
+}
+
+@GetMapping("/workouts")
+public String viewAllWorkouts(Model model) {
+    model.addAttribute("workouts", workoutService.getAllWorkouts());
+    return "providers/workout-list";
+}
+
 }

@@ -40,7 +40,8 @@
                 <p>Join Spartan Fitness today and embark on a transformative fitness journey. Our expert trainers and personalized workout plans are designed to help you achieve your health and wellness goals. Whether you're a beginner or a seasoned athlete, we have something for everyone. Start your journey with us and become the best version of yourself!</p>
                 <a href="customers/explore" class="btn">Explore Workouts</a>
                 <#if providerId??>
-                <a href="providers/workouts" class="btn">Create Workout</a>
+                <a href="customers/explore" class="btn">Workout</a>
+                <a href="providers/workouts/create" class="btn">Create Workout</a>
                 </#if>
             </div>
 

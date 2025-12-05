@@ -27,6 +27,14 @@ public class ReviewService {
         return average.orElse(0.0);
     }
 
+    public double getAverageRating(Provider provider) {
+        List<Review> reviews = reviewRepository.findByWorkoutProvider(provider);
+        OptionalDouble average = reviews.stream()
+                .mapToDouble(review -> review.getRating() != null ? review.getRating() : 0.0)
+                .average();
+        return average.orElse(0.0);
+    }
+
     public Review createReview(Review review) {
         review.setCreatedAt(LocalDateTime.now());
         return reviewRepository.save(review);
@@ -56,6 +64,9 @@ public class ReviewService {
         return reviewRepository.findByCustomer(customer);
     }
     public List<Review> getReviewsByProvider(Provider provider) {
+        return reviewRepository.findByWorkoutProvider(provider);
+    }
+    public List<Review> getReviewsForProvider(Provider provider) {
         return reviewRepository.findByWorkoutProvider(provider);
     }
 }

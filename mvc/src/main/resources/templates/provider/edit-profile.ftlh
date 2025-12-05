@@ -5,23 +5,37 @@
     <title>Edit Profile</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
-<body class="profile">
 
-<div class="edit-profile-container">
-    <h2>Edit Profile</h2>
+<body>
+
+<div class="card edit-profile-card">
+
+    <h1>Edit Profile</h1>
 
     <form action="/providers/${provider.id}/edit" method="post">
-        <label for="name">Name</label>
-        <input type="text" id="name" name="name" value="${provider.name}" required>
 
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" value="${provider.email}" required>
+        <div class="input-box">
+            <label>Name</label>
+            <input type="text" name="name" value="${provider.name}" required>
+        </div>
 
-        <button type="submit" class="btn-1">Save Changes</button>
-        <a href="/providers/${provider.id}/dashboard" class="btn-1">Cancel</a>
+        <div class="input-box">
+            <label>Email</label>
+            <input type="email" name="email" value="${provider.email}" required>
+        </div>
+
+        <div class="button-group">
+            <button type="submit" class="btn-1">Save</button>
+            <a href="/providers/${provider.id}/dashboard" class="logout-btn">Cancel</a>
+        </div>
+
     </form>
+
+    <a href="javascript:history.back()" class="back-link">Back</a>
+
 </div>
 
 </body>
 </html>
+
 

@@ -5,22 +5,27 @@
     <title>Edit Workout</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
-<body class="workout">
 
-<div class="workout-card">
+<body>
+
+<div class="card edit-workout-card">
+
     <h1>Edit Workout</h1>
 
-    <!-- Update Workout Form -->
-    <form action="/providers/${provider.id}/workouts/${workout.id}/edit" method="post" class="workout-form">
+    <form action="/providers/${provider.id}/workouts/${workout.id}/edit" method="post">
+
         <div class="input-box">
-            <input type="text" name="title" value="${workout.title!}" placeholder="Workout Title" required>
+            <label>Title</label>
+            <input type="text" name="title" value="${workout.title!}" required>
         </div>
 
         <div class="input-box">
-            <textarea name="description" placeholder="Workout Description" required>${workout.description!}</textarea>
+            <label>Description</label>
+            <textarea name="description" required>${workout.description!}</textarea>
         </div>
 
         <div class="input-box">
+            <label>Fitness Level</label>
             <select name="fitnessLevel" required>
                 <#list ["BEGINNER","INTERMEDIATE","ADVANCED"] as level>
                     <option value="${level}" <#if workout.fitnessLevel==level>selected</#if>>${level}</option>
@@ -28,23 +33,30 @@
             </select>
         </div>
 
-        <div class="input-box checkbox-box">
-            <label>
-                <input type="checkbox" name="active" <#if workout.active?? && workout.active>checked</#if>>
-                Active
-            </label>
-        </div>
+       <div class="input-box active-row">
+    <label class="active-label">
+        <input type="checkbox" name="active"
+               <#if workout.active?? && workout.active>checked</#if> >
+        Active
+    </label>
+</div>
+
 
         <div class="button-group">
-            <input type="submit" value="Save Changes" class="btn-save">
-            <a href="/providers/${provider.id}/dashboard" class="btn-back">Back</a>
+            <button type="submit" class="btn-1">Save Changes</button>
+            <a href="/providers/${provider.id}/dashboard" class="logout-btn">Back</a>
         </div>
+
     </form>
 
-    <!-- Delete Workout Form -->
-    <form action="/providers/${provider.id}/workouts/${workout.id}/delete" method="post" onsubmit="return confirm('Are you sure you want to delete this workout?');">
-        <button type="submit" class="btn-delete">Delete Workout</button>
-    </form>
+    <button onclick="document.getElementById('deleteForm').submit()" class="btn-delete delete-bottom">
+        Delete Workout
+    </button>
+
+    <form id="deleteForm"
+          action="/providers/${provider.id}/workouts/${workout.id}/delete"
+          method="post"></form>
+
 </div>
 
 </body>
