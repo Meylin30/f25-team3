@@ -284,5 +284,168 @@ body {
     width: 18px;
     height: 18px;
 }
+.reviews-card {
+    max-width: 750px;
+    margin: 40px auto;
+    padding: 35px;
+    border-radius: 14px;
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    text-align: center;
+}
+
+.reviews-card h1 {
+    color: var(--secondary);
+    font-size: 28px;
+    margin-bottom: 25px;
+}
+
+.review-item {
+    background: rgba(255,255,255,0.1);
+    border-left: 4px solid var(--secondary);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 12px;
+    text-align: left;
+}
+
+.review-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.review-top strong {
+    font-size: 17px;
+}
+
+.stars i {
+    color: var(--font-secondary);
+}
+
+.stars .filled {
+    color: var(--secondary);
+}
+
+.review-date {
+    font-size: 13px;
+    color: var(--font-secondary);
+}
+
+.review-text {
+    margin-top: 12px;
+    font-size: 15px;
+}
+
+.response-box {
+    margin-top: 15px;
+    background: rgba(255,255,255,0.07);
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.response-date {
+    font-size: 12px;
+    color: var(--font-secondary);
+}
+
+.reply-box {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.reply-box textarea {
+    width: 100%;
+    min-height: 80px;
+    border-radius: 10px;
+    border: 1px solid var(--card-border);
+    background: rgba(255,255,255,0.15);
+    color: var(--font);
+    padding: 10px;
+}
+.workouts-card {
+    max-width: 650px;
+    margin: 40px auto;
+    padding: 35px;
+    border-radius: 14px;
+    background: var(--card-bg);
+    border: 2px solid var(--card-border);
+    text-align: center;
+}
+
+.workouts-card h1 {
+    color: var(--secondary);
+    margin-bottom: 20px;
+}
+
+.create-btn {
+    display: block;
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+.workout-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.workout-list-item {
+    background: rgba(255,255,255,0.1);
+    border-left: 4px solid var(--secondary);
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.workout-info {
+    text-align: left;
+}
+
+.workout-title {
+    font-size: 18px;
+}
+
+.fitness-level {
+    font-size: 14px;
+    color: var(--font-secondary);
+}
+
+.small-edit {
+    padding: 8px 15px;
+    width: auto;
+}
+.filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.filters input,
+.filters select {
+    flex: 1;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid var(--card-border);
+    background: rgba(255,255,255,0.15);
+    color: var(--font);
+}
+
+.workout-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.small-edit {
+    padding: 8px 15px;
+}
+
+.small-delete {
+    padding: 8px 15px;
+}
 
 

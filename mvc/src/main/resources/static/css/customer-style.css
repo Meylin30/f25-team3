@@ -802,3 +802,128 @@ input, textarea, select {
     flex: 1 1 100%;
   }
 }
+
+
+
+
+
+
+.provider-section {
+    padding: 50px 20px;
+}
+
+.provider-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #0F2044;
+}
+
+.create-provider-btn {
+    display: block;
+    max-width: 300px;
+    margin: 0 auto 25px;
+    text-align: center;
+    background: #FFB71B;
+    color: #0F2044;
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 25px;
+    text-decoration: none;
+}
+
+.create-provider-btn:hover {
+    background: #e0a015;
+}
+
+.provider-workout-list {
+    max-width: 900px;
+    margin: 0 auto;
+    list-style: none;
+    padding: 0;
+}
+
+.provider-workout-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 18px 20px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    margin-bottom: 12px;
+    cursor: pointer;
+}
+
+.provider-workout-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.workout-icon {
+    font-size: 28px;
+}
+
+.provider-workout-title {
+    color: #0F2044;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.level-tag {
+    font-size: 13px;
+    color: #666;
+    text-transform: uppercase;
+}
+
+.provider-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.edit-provider-btn {
+    background: #0F2044;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.edit-provider-btn:hover {
+    background: #FFB71B;
+    color: #0F2044;
+}
+
+.delete-provider-btn {
+    background: #d9534f;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.delete-provider-btn:hover {
+    background: #b7423f;
+}
+
+.provider-description {
+    max-width: 860px;
+    margin: 10px auto;
+    background: #ffffff;
+    padding: 16px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    display: none;
+    color: #333;
+}
+
+.provider-description.open {
+    display: block;
+}

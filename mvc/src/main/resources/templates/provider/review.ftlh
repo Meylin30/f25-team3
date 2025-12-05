@@ -7,64 +7,48 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 
-<body class="profile">
+<body>
 
-<div class="header__wrapper">
+<div class="card reviews-card">
 
-    <!-- LEFT COLUMN -->
-    <div class="col__left">
-        <div class="img__container">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJq1STQvo8NE2C5hQKqkX1R-PDGWnKUl3beA&s"
-                 alt="${provider.name}">
-        </div>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJq1STQvo8NE2C5hQKqkX1R-PDGWnKUl3beA&s"
+         alt="${provider.name}"
+         class="profile-img">
 
-        <h2>${provider.name}</h2>
-        <p>Provider</p>
+    <h1>${provider.name}'s Reviews</h1>
 
-        <a href="/providers/${provider.id}/edit" class="btn-1">Edit Profile</a>
-        <a href="/providers/logout" class="btn-1 logout-btn">Logout</a>
+    <div class="button-group">
+        <a href="/providers/${provider.id}/dashboard" class="btn-1">Dashboard</a>
+        <a href="/providers/logout" class="logout-btn">Logout</a>
     </div>
 
-    <!-- RIGHT COLUMN -->
-    <div class="right__col">
-
-        <nav>
-            <ul>
-                <li><a href="/providers/${provider.id}/dashboard">Overview</a></li>
-                <li><a href="/providers/workouts/create">Workout Plans</a></li>
-                <li><a href="#" class="active">Reviews</a></li>
-            </ul>
-        </nav>
-
-        <!-- REVIEW SECTION -->
-<section class="reviews-section">
-    <h2>All Reviews</h2>
+    <h2 class="section-title">All Reviews</h2>
 
     <#if reviews?? && reviews?size gt 0>
 
         <#list reviews as review>
 
-            <div class="review-card">
+            <div class="review-item">
 
-                <div class="review-header">
-                    <strong class="review-name">${review.customer.name!"Unknown"}</strong>
-                    
-                    <!-- Stars -->
-                    <span class="stars">
+                <div class="review-top">
+                    <strong>${review.customer.name!"Unknown"}</strong>
+
+                    <div class="stars">
                         <#list 1..5 as i>
-                            <i class="fa-solid fa-star ${i <= review.rating?int?then('filled','')}"></i>
+                            <i class="fa-solid fa-star ${i <= review.rating?int ? then('filled','')}"></i>
                         </#list>
-                    </span>
+                    </div>
 
                     <span class="review-date">
                         ${review.createdAt?datetime("yyyy-MM-dd'T'HH:mm")?string("MMM dd, yyyy h:mm a")}
                     </span>
                 </div>
 
-                <p class="review-comment">"${review.comment!"No comment"}"</p>
+                <p class="review-text">"${review.comment!"No comment"}"</p>
 
                 <#if review.providerResponse??>
-                    <div class="provider-response-box">
+
+                    <div class="response-box">
                         <small>Your Response:</small>
                         <p>${review.providerResponse}</p>
 
@@ -76,10 +60,12 @@
                     </div>
 
                 <#else>
-                    <form action="/providers/${provider.id}/reviews/${review.id}/reply" method="POST" class="reply-form">
-                        <textarea name="providerResponse" required placeholder="Write a response..."></textarea>
-                        <button type="submit" class="btn-1 small-btn">Send Reply</button>
+
+                    <form action="/providers/${provider.id}/reviews/${review.id}/reply" method="post" class="reply-box">
+                        <textarea name="providerResponse" placeholder="Write a response..." required></textarea>
+                        <button type="submit" class="btn-1">Send Reply</button>
                     </form>
+
                 </#if>
 
             </div>
@@ -90,12 +76,6 @@
         <p>No reviews found.</p>
     </#if>
 
-</section>
-
-
-        <a href="/providers/${provider.id}/dashboard" class="btn-1">Back to Dashboard</a>
-
-    </div>
 </div>
 
 </body>
