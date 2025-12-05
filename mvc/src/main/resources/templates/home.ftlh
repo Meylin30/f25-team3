@@ -55,8 +55,10 @@
             Our expert trainers and customized workout plans help you reach your goals—
             whether you're a beginner or a seasoned athlete.
         </p>
-
-        <a href="/customers/explore" class="btn">Explore Workouts</a>
+         
+    <#if customerId??>
+    <a href="/customers/explore" class="btn">Explore Workouts</a>
+    </#if>
 
         <#-- Extra actions for logged-in provider -->
         <#if providerId??>

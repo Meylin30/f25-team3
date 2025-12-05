@@ -38,20 +38,14 @@
             <#list workouts as w>
 
                 <div class="workout-list-item"
-                     data-title="${w.title?lower_case}"
-                     data-level="${w.fitnessLevel}"
+                     data-title="${(w.title!'')?lower_case}"
+                     data-level="${w.fitnessLevel!'UNKNOWN'}"
                      data-id="${w.id}">
 
                     <div class="workout-info">
-                        <div class="workout-title">
-                            ${w.title}
-                        </div>
-                        <div class="fitness-level">
-                            ${w.fitnessLevel}
-                        </div>
-                        <p class="workout-title-line">
-                            ${w.description!""}
-                        </p>
+                        <div class="workout-title">${w.title!''}</div>
+                        <div class="fitness-level">${w.fitnessLevel!''}</div>
+                        <p class="workout-title-line">${w.description!''}</p>
                     </div>
 
                     <div class="workout-actions">
@@ -71,7 +65,7 @@
 
         <#else>
             <p>No workouts created yet.</p>
-        </#else>
+        </#if>
 
     </div>
 
@@ -93,11 +87,10 @@
         let level = filterLevel.value;
 
         let filtered = items.filter(item => {
-            let title = item.dataset.title;
-            let itemLevel = item.dataset.level;
-            let matchesSearch = title.includes(query);
-            let matchesLevel = level === "" || level === itemLevel;
-            return matchesSearch && matchesLevel;
+            let title = item.dataset.title || "";
+            let itemLevel = item.dataset.level || "";
+            return title.includes(query) &&
+                   (level === "" || level === itemLevel);
         });
 
         if (sortOrder.value === "newest") filtered.reverse();
@@ -113,5 +106,7 @@
 
 </body>
 </html>
+
+
 
 

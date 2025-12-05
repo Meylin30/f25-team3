@@ -447,5 +447,13 @@ body {
 .small-delete {
     padding: 8px 15px;
 }
+.stars i {
+    font-size: 18px;
+    margin-right: 3px;
+}
+
+.filled {
+    color: #FFB71B;
+}
 
 

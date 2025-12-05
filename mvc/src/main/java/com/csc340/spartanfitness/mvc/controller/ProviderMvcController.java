@@ -201,12 +201,16 @@ public class ProviderMvcController {
         return "redirect:/providers/" + providerId + "/reviews";
     }
 
-    @GetMapping("/{providerId}/reviews")
+   @GetMapping("/{providerId}/reviews")
     public String viewProviderReviews(@PathVariable Long providerId, Model model) {
-        Provider provider = providerService.getProviderById(providerId);
-        model.addAttribute("provider", provider);
-        model.addAttribute("reviews", reviewService.getReviewsForProvider(provider));
-        return "provider/reviews";
+    Provider provider = providerService.getProviderById(providerId);
+    if (provider == null) {
+        return "redirect:/signin";
     }
+    model.addAttribute("provider", provider);
+    model.addAttribute("reviews", reviewService.getReviewsForProvider(provider));
+
+    return "provider/reviews";
+}
 
 }
