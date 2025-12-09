@@ -6,11 +6,15 @@ import com.csc340.spartanfitness.review.ReviewService;
 import com.csc340.spartanfitness.workoutplans.Workout;
 import com.csc340.spartanfitness.workoutplans.Workout.FitnessLevel;
 import com.csc340.spartanfitness.workoutplans.WorkoutService;
+import com.csc340.spartanfitness.subscription.SubscriptionService;
+import com.csc340.spartanfitness.subscription.Subscription;
+
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,10 +24,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/providers")
 @RequiredArgsConstructor
 public class ProviderMvcController {
-
     private final ProviderService providerService;
     private final WorkoutService workoutService;
     private final ReviewService reviewService;
+    private final SubscriptionService subscriptionService;
+    
 
 
     @GetMapping("/{id}/dashboard")
@@ -33,7 +38,7 @@ public class ProviderMvcController {
 
         model.addAttribute("provider", provider);
         model.addAttribute("workouts", workoutService.getWorkoutsByProvider(provider));
-        model.addAttribute("reviews", reviewService.getReviewsForProvider(provider));
+        model.addAttribute("reviews", reviewService.getReviewsByProvider(provider));
         return "provider/dashboard";
     }
 
@@ -208,9 +213,60 @@ public class ProviderMvcController {
         return "redirect:/signin";
     }
     model.addAttribute("provider", provider);
-    model.addAttribute("reviews", reviewService.getReviewsForProvider(provider));
+    model.addAttribute("reviews", reviewService.getReviewsByProvider(provider));
 
     return "provider/reviews";
 }
+@GetMapping("/{id}/stats")
+public String providerStats(@PathVariable Long id, Model model) {
+
+    Provider provider = providerService.getProviderById(id);
+    if (provider == null) return "redirect:/signin";
+
+   
+    model.addAttribute("provider", provider);
+
+   
+    model.addAttribute("workoutCount", workoutService.countByProvider(id));
+    model.addAttribute("reviewCount", reviewService.countByProvider(id));
+    model.addAttribute("avgRating", reviewService.getAverageRating(id));
+    model.addAttribute("topLevel", workoutService.getTopLevel(id));
+    model.addAttribute("ratingDistribution", reviewService.getRatingBreakdown(id));
+    model.addAttribute("levelCounts", workoutService.getLevelCounts(id));
+
+    
+    model.addAttribute("subscriberCount",
+            subscriptionService.getActiveSubscriberCount(id));
+
+    model.addAttribute("subscriberBreakdown",
+            subscriptionService.getSubscribersByWorkout(id));
+
+    model.addAttribute("mostSubscribedWorkout",
+            subscriptionService.getMostSubscribedWorkout(id));
+
+    return "provider/stats";
+}
+@GetMapping("/{providerId}/workouts/{workoutId}/subscribers")
+public String viewWorkoutSubscribers(
+        @PathVariable Long providerId,
+        @PathVariable Long workoutId,
+        Model model) {
+
+    Provider provider = providerService.getProviderById(providerId);
+    if (provider == null) return "redirect:/signin";
+
+    Workout workout = workoutService.getWorkoutById(workoutId);
+
+    
+    List<Subscription> subscribers = subscriptionService.getSubscriptionsByWorkout(workout);
+
+    model.addAttribute("provider", provider);
+    model.addAttribute("workout", workout);
+    model.addAttribute("subscribers", subscribers);
+
+    return "provider/workout-subscribers";
+
+}
+
 
 }

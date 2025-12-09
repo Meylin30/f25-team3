@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>${provider.name!''}’s Reviews</title>
 
-    <!-- Font Awesome -->
+    
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -126,7 +126,7 @@
 
                 <div class="review-top">
 
-                    <!-- CUSTOMER NAME -->
+                  
                     <strong>
                         <#if review.customer??>
                             ${review.customer.name! "Unknown"}
@@ -135,7 +135,7 @@
                         </#if>
                     </strong>
 
-                    <!-- ⭐ STAR RATING ⭐ -->
+                   
                     <div class="stars">
 
                         <#assign rating = 0>
@@ -153,19 +153,19 @@
 
                     </div>
 
-                    <!-- DATE -->
+                   
                     <span class="review-date">
                         ${review.createdAt!"Unknown date"}
                     </span>
 
                 </div>
 
-                <!-- REVIEW TEXT -->
+               
                 <p class="review-text">
                     "${review.comment!"No comment"}"
                 </p>
 
-                <!-- PROVIDER RESPONSE -->
+               
                 <#if review.providerResponse??>
 
                     <div class="response-box">
