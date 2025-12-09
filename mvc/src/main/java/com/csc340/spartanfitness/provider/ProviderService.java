@@ -13,7 +13,6 @@ import com.csc340.spartanfitness.customer.Customer;
 @Service
 @RequiredArgsConstructor
 @Transactional
-
 public class ProviderService {
     private final ProviderRepository providerRepository;
 
@@ -67,12 +66,11 @@ public class ProviderService {
 
     public List<Provider> searchProviders(String query) {
     return providerRepository.findByNameContainingIgnoreCase(query);
-      
+    }   
       
     public Provider getProviderById(Long id) {
     return providerRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Provider not found"));
     }
-
-}
     
+}

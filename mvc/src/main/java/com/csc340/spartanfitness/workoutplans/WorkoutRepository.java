@@ -16,7 +16,6 @@ public interface WorkoutRepository extends JpaRepository<Workout, Long> {
     List<Workout> findByProviderAndActiveTrue(Provider provider);
 
     List<Workout> findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String title, String description);
-}
 
     @Query("SELECT COUNT(w) FROM Workout w WHERE w.provider.id = :id")
     int countByProvider(Long id);

@@ -25,29 +25,6 @@
             background-position: center;
         }
 
-        .wrapper {
-            width: 480px;
-            max-width: 90%;
-            background: transparent;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(20px);
-            color: #fff;
-            border-radius: 10px;
-            padding: 30px 40px 40px;
-        }
-
-        .wrapper h1 {
-            font-size: 36px;
-            text-align: center;
-        }
-
-        .wrapper .input-box {
-            position: relative;
-            width: 100%;
-            height: 50px;
-            margin: 30px 0;
-        }
-
         .input-box input {
             width: 100%;
             height: 100%;
@@ -62,42 +39,6 @@
 
         .input-box input::placeholder {
             color: #fff;
-        }
-
-        .wrapper .remember-forgot {
-            font-size: 14px;
-            margin: -15px 0 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: nowrap;
-        }
-
-        .wrapper .remember-forgot label {
-            font-size: 14px;
-            display: inline-flex;          
-            align-items: center;    
-            gap: 5px;               
-            cursor: pointer;
-            white-space: nowrap;  
-        }
-
-        .wrapper .remember-forgot label input {
-            width: 14px;
-            height: 14px;
-            margin: 0;
-            accent-color: var(--secondary);
-            vertical-align: middle;
-        }
-
-        .wrapper .remember-forgot a {
-            color: #fff;
-            text-decoration: none;
-        }
-
-        .wrapper .remember-forgot a:hover {
-            text-decoration: underline;
-            color: var(--secondary);
         }
 
         form .button {
@@ -157,26 +98,6 @@
             text-decoration: underline;
         }
 
-        /* ---------------- User Type Radio Buttons ---------------- */
-        .user-type {
-            display: flex;
-            gap: 20px;
-            margin: 20px 0;
-        }
-
-        .user-type label {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            gap: 8px;
-            font-weight: bold;
-            color: var(--font);
-        }
-
-        .user-type input[type="radio"] {
-            display: none;
-        }
-
         .custom-radio {
             width: 18px;
             height: 18px;
@@ -186,22 +107,58 @@
             position: relative;
         }
 
-        .user-type input[type="radio"]:checked + .custom-radio::after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 10px;
-            height: 10px;
-            background-color: var(--secondary);
-            border-radius: 50%;
-        }
+        /* --- FIXED CUSTOM RADIOS --- */
+
+.role-toggle {
+    display: flex;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.role-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    color: var(--font);
+    font-weight: bold;
+}
+
+/* Hide browser radio */
+.role-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Custom radio circle */
+.custom-radio {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--secondary);
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+}
+
+/* Checked state */
+.role-option input[type="radio"]:checked + .custom-radio::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    transform: translate(-50%, -50%);
+    background-color: var(--secondary);
+    border-radius: 50%;
+}
 
     </style>
 </head>
 
-<body class="auth-bg">
+<body class="auth-bg"
 
 <div class="auth-container">
 
@@ -218,13 +175,14 @@
             <div class="role-toggle">
                 <label class="role-option">
                     <input type="radio" name="userType" value="customer">
+                    <span class="custom-radio"></span>
                     <span>Customer</span>
                 </label>
 
                 <label class="role-option">
                     <input type="radio" name="userType" value="provider">
                     <span class="custom-radio"></span>
-                    Trainer
+                    <span>Trainer</span>
                 </label>
             </div>
 
@@ -232,12 +190,17 @@
             <input type="email" name="email" class="auth-input" placeholder="Email address" required>
             <input type="password" name="password" class="auth-input" placeholder="Password" required>
 
-            <a href="#" class="auth-forgot">Forgot password?</a>
-
             <!-- Button -->
             <button type="submit" class="btn">Login</button>
 
         </form>
+
+         <!-- FOOTER -->
+            <p class="auth-footer">
+                New here?
+                <a href="/customers/signup">Create Account</a> |
+                <a href="/providers/signup">Become a Trainer</a>
+            </p>
 
     </div>
 </div>
