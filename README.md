@@ -16,5 +16,5 @@
 2. Provider(the user with the provider role):
     1. Create/modify/remove provider profile- Register as a provider/trainor. 
     2. Create services- Post workout plans. 
-    3. View customer statistics- View customer progress. 
+    3. View statistics- overall review, total workouts and subscribers.
     4. Reply to reviews- Reply to feedback.
