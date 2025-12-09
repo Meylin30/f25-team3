@@ -1,15 +1,22 @@
 package com.csc340.spartanfitness.mvc.controller;
 
-import com.csc340.spartanfitness.customer.Customer;
+import com.csc340.spartanfitness.Exercise.Exercise;
+import com.csc340.spartanfitness.Exercise.ExerciseService;
 import com.csc340.spartanfitness.provider.Provider;
 import com.csc340.spartanfitness.provider.ProviderService;
+import com.csc340.spartanfitness.review.ReviewService;
 import com.csc340.spartanfitness.workoutplans.Workout;
 import com.csc340.spartanfitness.workoutplans.Workout.FitnessLevel;
 import com.csc340.spartanfitness.workoutplans.WorkoutService;
+import com.csc340.spartanfitness.subscription.SubscriptionService;
+import com.csc340.spartanfitness.subscription.Subscription;
+
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,124 +26,132 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/providers")
 @RequiredArgsConstructor
 public class ProviderMvcController {
-     
     private final ProviderService providerService;
     private final WorkoutService workoutService;
+    private final ReviewService reviewService;
+    private final SubscriptionService subscriptionService;
+    private final ExerciseService exerciseService;
 
     
-  @GetMapping("/{id}/dashboard")
-public String dashboard(@PathVariable Long id, Model model) {
-    Provider provider = providerService.getProviderById(id);
-    if (provider == null) {
-        return "redirect:/signin"; // or a proper error page
+
+
+    @GetMapping("/{id}/dashboard")
+    public String dashboard(@PathVariable Long id, Model model) {
+        Provider provider = providerService.getProviderById(id);
+        if (provider == null) return "redirect:/signin";
+
+        model.addAttribute("provider", provider);
+        model.addAttribute("workouts", workoutService.getWorkoutsByProvider(provider));
+        model.addAttribute("reviews", reviewService.getReviewsByProvider(provider));
+        return "provider/dashboard";
     }
-    model.addAttribute("provider", provider);
-    model.addAttribute("workouts", workoutService.getWorkoutsByProvider(provider));
-    return "provider/dashboard";  
-}
 
 
-    // Create Workout 
+    @GetMapping("/{providerId}/workouts")
+    public String providerWorkouts(@PathVariable Long providerId, Model model) {
+        Provider provider = providerService.getProviderById(providerId);
+        if (provider == null) return "redirect:/signin";
+
+        model.addAttribute("provider", provider);
+        model.addAttribute("workouts", workoutService.getWorkoutsByProvider(provider));
+        return "provider/workout-list";
+    }
+
+
     @GetMapping("/workouts/create")
     public String createWorkoutForm(HttpSession session, Model model) {
         Long providerId = (Long) session.getAttribute("providerId");
-        if (providerId == null) {
-            return "redirect:/signin"; 
-        }
+        if (providerId == null) return "redirect:/signin";
+
         Provider provider = providerService.getProviderById(providerId);
         model.addAttribute("provider", provider);
-        return "provider/create-workout";  
+        return "provider/create-workout";
     }
 
     @PostMapping("/workouts/create")
-public String createWorkout(
-        HttpSession session,
-        @RequestParam String title,
-        @RequestParam(required = false) String description,
-        @RequestParam FitnessLevel fitnessLevel,
-        @RequestParam(defaultValue = "false") boolean active) {
+    public String createWorkout(HttpSession session,
+                                @RequestParam String title,
+                                @RequestParam(required = false) String description,
+                                @RequestParam FitnessLevel fitnessLevel,
+                                @RequestParam(defaultValue = "false") boolean active) {
 
-    Long providerId = (Long) session.getAttribute("providerId"); 
-    if(providerId == null) {
-        return "redirect:/signin"; 
-    } 
-    Provider provider = providerService.getProviderById(providerId);
+        Long providerId = (Long) session.getAttribute("providerId");
+        if (providerId == null) return "redirect:/signin";
 
-    Workout workout = new Workout();
-    workout.setProvider(provider);
-    workout.setTitle(title);
-    workout.setDescription(description);
-    workout.setActive(active);
-    workout.setFitnessLevel(fitnessLevel);
+        Provider provider = providerService.getProviderById(providerId);
 
-    workoutService.createWorkout(provider, workout);
+        Workout workout = new Workout();
+        workout.setProvider(provider);
+        workout.setTitle(title);
+        workout.setDescription(description);
+        workout.setActive(active);
+        workout.setFitnessLevel(fitnessLevel);
 
-    return "redirect:/providers/" + providerId + "/dashboard";
-}
+        workoutService.createWorkout(provider, workout);
+        return "redirect:/providers/" + providerId + "/dashboard";
+    }
 
-//  Edit Workout 
+
     @GetMapping("/{providerId}/workouts/{workoutId}/edit")
     public String editWorkoutForm(@PathVariable Long providerId,
                                   @PathVariable Long workoutId,
                                   Model model) {
+
         Provider provider = providerService.getProviderById(providerId);
         Workout workout = workoutService.getWorkoutById(workoutId);
+
         model.addAttribute("provider", provider);
         model.addAttribute("workout", workout);
-        return "provider/edit-workout";  
+        return "provider/edit-workout";
     }
 
-    // Update Workout 
-@PostMapping("/{providerId}/workouts/{workoutId}/edit")
-public String editWorkout(@PathVariable Long providerId,
-                          @PathVariable Long workoutId,
-                          @RequestParam String title,
-                          @RequestParam(required = false) String description,
-                          @RequestParam Workout.FitnessLevel fitnessLevel,
-                          @RequestParam(defaultValue = "false") boolean active) {
+    @PostMapping("/{providerId}/workouts/{workoutId}/edit")
+    public String editWorkout(@PathVariable Long providerId,
+                              @PathVariable Long workoutId,
+                              @RequestParam String title,
+                              @RequestParam(required = false) String description,
+                              @RequestParam FitnessLevel fitnessLevel,
+                              @RequestParam(defaultValue = "false") boolean active) {
 
-    Workout workout = workoutService.getWorkoutById(workoutId);
-    workout.setTitle(title);
-    workout.setDescription(description);
-    workout.setFitnessLevel(fitnessLevel);
-    workout.setActive(active);
+        Workout workout = workoutService.getWorkoutById(workoutId);
+        workout.setTitle(title);
+        workout.setDescription(description);
+        workout.setFitnessLevel(fitnessLevel);
+        workout.setActive(active);
 
-    workoutService.updateWorkout(workoutId, workout);
-    return "redirect:/providers/" + providerId + "/dashboard";
-}
-
-// Delete Workout
-@PostMapping("/{providerId}/workouts/{workoutId}/delete")
-public String deleteWorkout(@PathVariable Long providerId,
-                            @PathVariable Long workoutId) {
-    workoutService.deleteWorkout(workoutId);
-    return "redirect:/providers/" + providerId + "/dashboard";
-}
+        workoutService.updateWorkout(workoutId, workout);
+        return "redirect:/providers/" + providerId + "/dashboard";
+    }
 
 
+    @PostMapping("/{providerId}/workouts/{workoutId}/delete")
+    public String deleteWorkout(@PathVariable Long providerId,
+                                @PathVariable Long workoutId) {
+
+        workoutService.deleteWorkout(workoutId);
+        return "redirect:/providers/" + providerId + "/dashboard";
+    }
 
 
-    //  Edit Profile 
     @GetMapping("/{id}/edit-profile")
     public String editProfileForm(@PathVariable Long id, Model model) {
         Provider provider = providerService.getProviderById(id);
         model.addAttribute("provider", provider);
-        return "provider/edit-profile"; 
+        return "provider/edit-profile";
     }
 
     @PostMapping("/{id}/edit-profile")
     public String editProfile(@PathVariable Long id,
                               @Valid @ModelAttribute("provider") Provider providerDetails,
                               BindingResult result) {
-        if (result.hasErrors()) {
-            return "provider/edit-profile";
-        }
+
+        if (result.hasErrors()) return "provider/edit-profile";
+
         providerService.updateProvider(id, providerDetails);
         return "redirect:/providers/" + id + "/dashboard";
     }
 
 
-    // Edit profile form
     @GetMapping("/{id}/edit")
     public String editProfileView(@PathVariable Long id, Model model) {
         Provider provider = providerService.getProviderById(id);
@@ -144,28 +159,31 @@ public String deleteWorkout(@PathVariable Long providerId,
         return "provider/edit-profile";
     }
 
-    // Update profile
     @PostMapping("/{id}/edit")
     public String updateProfile(@PathVariable Long id, @ModelAttribute Provider provider) {
         providerService.updateProvider(id, provider);
         return "redirect:/providers/" + id + "/dashboard";
     }
 
+
     @GetMapping("/signup")
     public String signupForm(Model model) {
-    model.addAttribute("provider", new Provider());
-    return "provider/signup";  
-}
-
+        model.addAttribute("provider", new Provider());
+        return "provider/signup";
+    }
 
     @PostMapping("/signup")
     public String signup(@ModelAttribute Provider provider) {
-    providerService.createProvider(provider);
-    return "redirect:/signin";
-}
+        providerService.createProvider(provider);
+        return "redirect:/signin";
+    }
 
-      @PostMapping("/signin")
-    public String signin(@RequestParam String email, @RequestParam String password, HttpSession session) {
+
+    @PostMapping("/signin")
+    public String signin(@RequestParam String email,
+                         @RequestParam String password,
+                         HttpSession session) {
+
         try {
             Provider provider = providerService.authenticate(email, password);
             session.setAttribute("providerId", provider.getId());
@@ -175,9 +193,149 @@ public String deleteWorkout(@PathVariable Long providerId,
         }
     }
 
-     @GetMapping("/logout")
+
+    @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.removeAttribute("providerId");
         return "redirect:/";
     }
+
+
+    @PostMapping("/{providerId}/reviews/{reviewId}/reply")
+    public String replyToReview(@PathVariable Long providerId,
+                                @PathVariable Long reviewId,
+                                @RequestParam String providerResponse) {
+
+        reviewService.addProviderResponse(reviewId, providerResponse);
+        return "redirect:/providers/" + providerId + "/reviews";
+    }
+
+   @GetMapping("/{providerId}/reviews")
+    public String viewProviderReviews(@PathVariable Long providerId, Model model) {
+    Provider provider = providerService.getProviderById(providerId);
+    if (provider == null) {
+        return "redirect:/signin";
+    }
+    model.addAttribute("provider", provider);
+    model.addAttribute("reviews", reviewService.getReviewsByProvider(provider));
+
+    return "provider/reviews";
 }
+@GetMapping("/{id}/stats")
+public String providerStats(@PathVariable Long id, Model model) {
+
+    Provider provider = providerService.getProviderById(id);
+    if (provider == null) return "redirect:/signin";
+
+   
+    model.addAttribute("provider", provider);
+
+   
+    model.addAttribute("workoutCount", workoutService.countByProvider(id));
+    model.addAttribute("reviewCount", reviewService.countByProvider(id));
+    model.addAttribute("avgRating", reviewService.getAverageRating(id));
+    model.addAttribute("topLevel", workoutService.getTopLevel(id));
+    model.addAttribute("ratingDistribution", reviewService.getRatingBreakdown(id));
+    model.addAttribute("levelCounts", workoutService.getLevelCounts(id));
+
+    
+    model.addAttribute("subscriberCount",
+            subscriptionService.getActiveSubscriberCount(id));
+
+    model.addAttribute("subscriberBreakdown",
+            subscriptionService.getSubscribersByWorkout(id));
+
+    model.addAttribute("mostSubscribedWorkout",
+            subscriptionService.getMostSubscribedWorkout(id));
+
+    return "provider/stats";
+}
+@GetMapping("/{providerId}/workouts/{workoutId}/subscribers")
+public String viewWorkoutSubscribers(
+        @PathVariable Long providerId,
+        @PathVariable Long workoutId,
+        Model model) {
+
+    Provider provider = providerService.getProviderById(providerId);
+    if (provider == null) return "redirect:/signin";
+
+    Workout workout = workoutService.getWorkoutById(workoutId);
+
+    
+    List<Subscription> subscribers = subscriptionService.getSubscriptionsByWorkout(workout);
+
+    model.addAttribute("provider", provider);
+    model.addAttribute("workout", workout);
+    model.addAttribute("subscribers", subscribers);
+
+    return "provider/workout-subscribers";
+
+}
+
+@GetMapping("/{providerId}/workouts/{workoutId}/exercises/create")
+public String showAddExercise(
+        @PathVariable Long providerId,
+        @PathVariable Long workoutId,
+        Model model) {
+
+    model.addAttribute("providerId", providerId);
+    model.addAttribute("workoutId", workoutId);
+    model.addAttribute("exercise", new Exercise());
+
+    return "provider/exercise-create";
+}
+
+@PostMapping("/{providerId}/workouts/{workoutId}/exercises/create")
+public String saveExercise(
+        @PathVariable Long providerId,
+        @PathVariable Long workoutId,
+        @ModelAttribute Exercise exercise) {
+
+    Workout workout = workoutService.getWorkoutById(workoutId);
+
+    exerciseService.addExerciseToWorkout(workout, exercise);
+
+    return "redirect:/providers/" + providerId + "/workouts/" + workoutId + "/edit";
+}
+
+@GetMapping("/{providerId}/workouts/{workoutId}/exercises/{exerciseId}/edit")
+public String editExercise(
+        @PathVariable Long providerId,
+        @PathVariable Long workoutId,
+        @PathVariable Long exerciseId,
+        Model model) {
+
+    Workout workout = workoutService.getWorkoutById(workoutId);
+    Exercise exercise = exerciseService.getExerciseById(exerciseId);
+
+    model.addAttribute("providerId", providerId);
+    model.addAttribute("workout", workout);
+    model.addAttribute("exercise", exercise);
+
+    return "provider/edit-exercise";   
+}
+
+@PostMapping("/{providerId}/workouts/{workoutId}/exercises/{exerciseId}/edit")
+public String updateExercise(
+        @PathVariable Long providerId,
+        @PathVariable Long workoutId,
+        @PathVariable Long exerciseId,
+        @ModelAttribute Exercise exerciseDetails) {
+
+    exerciseService.updateExercise(exerciseId, exerciseDetails);
+
+    return "redirect:/providers/" + providerId + "/workouts/" + workoutId + "/edit";
+}
+
+@PostMapping("/{providerId}/workouts/{workoutId}/exercises/{exerciseId}/delete")
+public String deleteExercise(
+        @PathVariable Long providerId,
+        @PathVariable Long workoutId,
+        @PathVariable Long exerciseId) {
+
+    exerciseService.deleteExercise(exerciseId);
+
+    return "redirect:/providers/" + providerId + "/workouts/" + workoutId + "/edit";
+}
+}
+

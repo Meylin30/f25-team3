@@ -39,10 +39,6 @@ public class ProviderService {
         return providerRepository.save(provider);
     }
 
-    public Provider getProviderById(Long id) {
-        return providerRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Provider not found"));
-    }
 
     public Provider getProviderByEmail(String email) {
         return providerRepository.findByEmail(email)
@@ -71,7 +67,12 @@ public class ProviderService {
 
     public List<Provider> searchProviders(String query) {
     return providerRepository.findByNameContainingIgnoreCase(query);
-}
+      
+      
+    public Provider getProviderById(Long id) {
+    return providerRepository.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Provider not found"));
+    }
 
 }
     

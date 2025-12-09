@@ -76,7 +76,7 @@
             padding: 2rem;
             box-shadow: 0 0 1.5rem rgba(0,0,0,0.1);
         ">
-            <img src="" class="card-img ratio-3x4">
+            <img src="https://www.goodlifefitness.com/content/experience-fragments/goodlife/training_pages/personal-training/text-banner/pt-professional-trainers/_jcr_content/root/responsivegrid/responsivegrid/image.coreimg.90.1024.jpeg/1727111906659/pt-webphotos-pt-webphoto-1.jpeg" class="card-img ratio-3x4">
             <h2 style="font-size: 2rem; color: var(--main); margin-bottom: 1rem;">
                 Trainer
             </h2>

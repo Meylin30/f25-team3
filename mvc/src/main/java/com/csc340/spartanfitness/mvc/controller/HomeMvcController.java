@@ -26,10 +26,20 @@ public class HomeMvcController {
         this.providerService = providerService;
         this.workoutService = workoutService;
     }
-
+  
     @GetMapping("/")
-    public String home(Model model) {
-        return "home";
+    public String home(Model model, HttpSession session) {
+
+      Long providerId = (Long) session.getAttribute("providerId");
+        model.addAttribute("providerId", providerId);
+
+      if (providerId != null) {
+        Provider provider = providerService.getProviderById(providerId);
+        List<Workout> workouts = workoutService.getWorkoutsByProvider(provider);
+        model.addAttribute("workouts", workouts);
+      }
+
+      return "home";
     }
 
     @GetMapping("/signup")
