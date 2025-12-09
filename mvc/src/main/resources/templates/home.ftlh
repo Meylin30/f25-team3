@@ -35,16 +35,16 @@
         <#else>
             <a href="/signin">Sign In</a>
             <a href="/signup">Sign Up</a>
-        </#if>
-    </nav>
-
-    <div class="container">
-        <form>
-            <input type="search" placeholder="Search here..." id="search-box">
-            <label for="search-box" class="fas fa-search"></label>
-        </form>
-    </div>
-</header>
+        </#if>    
+        </nav>
+        <div class="container">
+                <form action="/customers/explore" method="get">
+                <input type="search" name="search" placeholder="Search here..." id="search-box">
+                <label for="search-box" class="fas fa-search"></label>
+                <button type="submit" style="display:none;"></button>
+            </form>
+        </div>
+    </header>
 
 <section class="home">
     <div class="content">
@@ -71,7 +71,6 @@
         <img src="/images/home-fitness.png" alt="Fitness">
     </div>
 </section>
-
 </body>
 </html>
 

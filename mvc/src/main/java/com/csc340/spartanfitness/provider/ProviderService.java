@@ -64,10 +64,15 @@ public class ProviderService {
 
         return provider;
     }
+
+    public List<Provider> searchProviders(String query) {
+    return providerRepository.findByNameContainingIgnoreCase(query);
+      
+      
     public Provider getProviderById(Long id) {
     return providerRepository.findById(id)
             .orElseThrow(() -> new EntityNotFoundException("Provider not found"));
-}
+    }
 
 }
     

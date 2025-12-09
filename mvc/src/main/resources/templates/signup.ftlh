@@ -39,10 +39,11 @@
         </#if>    
         </nav>
         <div class="container">
-                <form action="">
-                    <input type="search" name="" placeholder="Search here..." id="search-box">
-                    <label for="search-box" class="fas fa-search"></label>
-                </form>
+                <form action="/customers/explore" method="get">
+                <input type="search" name="search" placeholder="Search here..." id="search-box">
+                <label for="search-box" class="fas fa-search"></label>
+                <button type="submit" style="display:none;"></button>
+            </form>
         </div>
     </header>
 

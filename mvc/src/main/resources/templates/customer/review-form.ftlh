@@ -65,6 +65,12 @@
            color: #0056b3; /* darker blue on hover */
            transform: translateY(-1px); /* subtle lift effect */
         }
+
+        .review-container {
+            margin-top: 12rem; /* adjust this to match your header height */
+            padding: 2rem;
+        }
+
     </style>
 </head>
 
@@ -90,6 +96,10 @@
             <#assign latest = sortedByLatestReviews[0] />
 
             <div class="review-card review-item" style="display: block;">
+                <div class="review-author">
+                    <i class="fas fa-user-circle"></i>
+                    ${latest.customer.name!""}
+                </div>
                 <div class="review-rating">
                     <#list 1..5 as i>
                         <i class="
@@ -108,15 +118,15 @@
                     ${latest.comment! "No comment left."}
                 </p>
 
-                <div style="color:#555;">
-                    <i class="fas fa-user-circle"></i>
-                    ${latest.customer.name!""}
-                </div>
             </div>
 
             <#-- Remaining reviews (hidden, shown by JS) -->
             <#list sortedByLatestReviews[1..] as review>
                 <div class="review-card review-item" style="display:none;">
+                    <div class="review-author">
+                        <i class="fas fa-user-circle"></i>
+                        ${review.customer.name!""}
+                    </div>
                     <div class="review-rating">
                         <#list 1..5 as i>
                             <i class="
@@ -135,10 +145,6 @@
                         ${review.comment! "No comment left."}
                     </p>
 
-                    <div style="color:#555;">
-                        <i class="fas fa-user-circle"></i>
-                        ${review.customer.name!""}
-                    </div>
                 </div>
             </#list>
 

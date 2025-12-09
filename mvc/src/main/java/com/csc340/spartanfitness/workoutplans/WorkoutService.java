@@ -59,6 +59,10 @@ public class WorkoutService {
         return workoutRepository.findByProviderAndActiveTrue(provider);
     }
 
+    public List<Workout> searchWorkouts(String query) {
+    return workoutRepository.findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(query, query);
+    }
+
     public int countByProvider(Long providerId) {
         return workoutRepository.countByProvider(providerId);
     }
@@ -66,7 +70,7 @@ public class WorkoutService {
     public String getTopLevel(Long providerId) {
     List<Workout.FitnessLevel> levels = workoutRepository.findTopLevels(providerId);
     return levels.isEmpty() ? "None" : levels.get(0).name();  
-}
+    }
 
 
     public Map<String, Long> getLevelCounts(Long providerId) {
@@ -74,16 +78,17 @@ public class WorkoutService {
         List<Object[]> rows = workoutRepository.countLevelDistribution(providerId);
             if (rows == null || rows.isEmpty()) {
             return result;
-        }
+            }
+      
             for (Object[] row : rows) {
                 if (row[0] == null || row[1] == null) {
                 continue; 
-            }
+                }
                 Workout.FitnessLevel level = (Workout.FitnessLevel) row[0];
             Long count = (Long) row[1];
 
             result.put(level.name(), count);
-        }
+            }
 
         return result;
     }

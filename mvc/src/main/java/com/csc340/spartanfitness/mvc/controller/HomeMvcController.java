@@ -10,7 +10,11 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.util.UriUtils;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Controller
@@ -22,23 +26,21 @@ public class HomeMvcController {
         this.providerService = providerService;
         this.workoutService = workoutService;
     }
-@GetMapping("/")
-public String home(Model model, HttpSession session) {
+  
+    @GetMapping("/")
+    public String home(Model model, HttpSession session) {
 
-    Long providerId = (Long) session.getAttribute("providerId");
-model.addAttribute("providerId", providerId);
+      Long providerId = (Long) session.getAttribute("providerId");
+        model.addAttribute("providerId", providerId);
 
-if (providerId != null) {
-    Provider provider = providerService.getProviderById(providerId);
-    List<Workout> workouts = workoutService.getWorkoutsByProvider(provider);
-    model.addAttribute("workouts", workouts);
-}
+      if (providerId != null) {
+        Provider provider = providerService.getProviderById(providerId);
+        List<Workout> workouts = workoutService.getWorkoutsByProvider(provider);
+        model.addAttribute("workouts", workouts);
+      }
 
-
-return "home";
-}
-
-
+      return "home";
+    }
 
     @GetMapping("/signup")
     public String signup() {
@@ -58,4 +60,10 @@ return "home";
         
         return "signin";
     }
+
+    @PostMapping("/search")
+    public String search(@RequestParam("query") String query) {
+        return "redirect:/customers/explore?search=" + UriUtils.encode(query, StandardCharsets.UTF_8);
+    }
+
 }

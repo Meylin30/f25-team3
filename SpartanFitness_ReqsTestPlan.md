@@ -1,7 +1,7 @@
 # SpartanFitness Requirements Testing
 ## Actors
 - Provider: Meylin Borjas
-- Customer
+- Customer: Elisha Ricketts
 
 ### Use Cases
 #### 1. Provider: Create provider profile use case:
@@ -19,22 +19,23 @@
     + Adds exercises into each plan — sets, reps, instructions, video links(optional).
 4. Providers logs out 
 
-#### 2. Customer: Create customer profile:
+#### 2. Customer: Create customer profile(sign up as a customer):
 1. Customer C1 logs in for the first time and creates a profile.
 
-#### 3. Customer:  View and subscribe to services:
+#### 3. Customer:  View and subscribe to services(subscribe to workout plans):
 1. Customer C2 logs in for the first time and creates a new profile.
-2. C2 views available services S1 and S2.
+2. C2 views available workouts S1 and S2.
 3. C2 subscribes to S1.
 
-#### 4. Customer: Write review
+#### 4. Customer: Write review(rates a plan)
 1. C2 log in and views their subscriptions.
-2. C2 writes a positive review of service S1. C2 exits.
+2. C2 writes a positive review of workout S1. C2 exits.
 
 #### 5. Customer: Modify profile
 1. C1 logs in and modifies their profile.
-2. C1 views service S1 and the positive review.
-3. C1 subscribes to S1. C1 exits.
+2. C1 searches for available workouts plans.
+3. C1 views workout S1 and the positive review.
+4. C1 subscribes to S1. C1 exits.
 
 #### 6. Provider:  Reply to Review, View Customer Statistics, & Modify Profile use cases
 1.  Provider logs into SpartanFitness and navigates to their dashboard.

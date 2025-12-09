@@ -803,6 +803,75 @@ input, textarea, select {
   }
 }
 
+.name-link {
+    color: var(--font);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.25s ease;
+}
+
+.name-link:hover {
+    color: var(--font-secondary);
+}
+
+.latest-review-section {
+  margin-top: 4rem;
+  padding: 2rem;
+  background: #f9f9f9;
+  border-radius: 1rem;
+}
+
+.latest-review-section h3 {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  color: var(--main);
+}
+
+.review-card {
+  padding: 1.5rem;
+  border: 2px solid #ddd;
+  border-radius: 1rem;
+  margin-bottom: 1.5rem;
+  background: #fff;
+}
+
+.review-author {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-weight: 600;
+  font-size: 1.8rem;
+  color: var(--main);
+  margin-bottom: 1.2rem;
+}
+
+.review-author i.fas.fa-user-circle {
+  font-size: 3.8rem;
+  color: var(--font-secondary);
+}
+
+.review-rating {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 2rem;
+  color: gold;
+  margin-bottom: 0.5rem;
+}
+
+.latest-review-section p {
+  font-size: 1.6rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.latest-review-section a {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  text-decoration: underline;
+  color: var(--primary);
+  font-weight: 600;
+}
+
 
 
 

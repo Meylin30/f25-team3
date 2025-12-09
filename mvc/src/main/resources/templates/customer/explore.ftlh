@@ -1,11 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>${title! "Homepage"}</title>
+    <title>${title! "Explore"}</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <link rel="stylesheet" href="/css/customer-style.css">
+
+    <style>
+    .search-results-container {
+        display: flex;
+        gap: 2rem; /* space between columns */
+        margin: 2rem;
+    }
+
+    .search-results-container .column {
+        flex: 1;
+        background: #f8f8f8;
+        padding: 1rem 2rem;
+        border-radius: 0.5rem;
+    }
+
+    .search-results-container .column h3 {
+        margin-top: 0;
+        margin-bottom: 1rem;
+        font-size: 2rem;
+    }
+
+    .search-results-container ul {
+        list-style: none;
+        padding-left: 0;
+    }
+
+    .search-results-container li {
+        margin-bottom: 0.8rem;
+        font-size: 1.6rem;
+    }
+
+    .search-results-container a {
+        text-decoration: none;
+        color: var(--main);
+    }
+
+    .search-results-container a:hover {
+        color: var(--secondary);
+    }
+
+    </style>
 </head>
 <body>
     <header>
@@ -21,9 +62,10 @@
         </#if>    
         </nav>
         <div class="container">
-            <form action="">
-                <input type="search" name="" placeholder="Search here..." id="search-box">
+            <form action="/customers/explore" method="get">
+                <input type="search" name="search" placeholder="Search here..." id="search-box">
                 <label for="search-box" class="fas fa-search"></label>
+                <button type="submit" style="display:none;"></button>
             </form>
         </div>
     </header>
@@ -54,6 +96,33 @@
         <button class="carousel-control prev" onclick="prevSlide()">&#10094;</button>
         <button class="carousel-control next" onclick="nextSlide()">&#10095;</button>
     </div>
+
+    <#-- Only show search results if there is a search -->
+    <#if searchWorkouts?size gt 0 || searchProviders?size gt 0>
+      <div class="search-results-container">
+          <div class="column workouts-column">
+              <h3>Workouts</h3>
+              <ul>
+                  <#list searchWorkouts as workout>
+                      <li>
+                          <a href="/customers/explore/${workout.id}">${workout.title}</a> - ${workout.description!""}
+                      </li>
+                  </#list>
+              </ul>
+          </div>
+          <div class="column providers-column">
+              <h3>Trainers</h3>
+              <ul>
+                  <#list searchProviders as provider>
+                      <li>
+                          <a href="/customers/explore/trainer/${provider.id}">${provider.name}</a>
+                      </li>
+                  </#list>
+              </ul>
+          </div>
+      </div>
+    </#if>
+
 
     <div class="workout-tabs">
         <h2>Workout Categories</h2>
