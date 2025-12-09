@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>${title! "Homepage"}</title>
+    <title>${title! "Dashboard"}</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
@@ -91,6 +91,74 @@
           color: black;
       }
 
+      p.email {
+          text-transform: none;
+      }
+
+      #meal-prep-form {
+          display: flex;
+          justify-content: space-between; /* push button to the right */
+          align-items: center;
+          flex-wrap: wrap;
+          margin: 10px 0;
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 8px;
+      }
+
+      /* Container for the two input fields stacked */
+      .meal-prep-inputs {
+          display: flex;
+          flex-direction: column; /* stack vertically */
+          gap: 5px; /* space between input rows */
+      }
+
+      /* Keep labels inline with their input */
+      .meal-prep-inputs label {
+          font-weight: bold;
+      }
+
+      /* Inputs styling */
+      .meal-prep-input {
+          padding: 5px 8px;
+          border: 1px solid var(--main);
+          border-radius: 5px;
+          background-color: #FFFFFF;
+          color: #000000;
+          outline: none;
+          width: 200px;
+      }
+
+      /* Button styling */
+      .meal-prep-button {
+          padding: 8px 15px;
+          background-color: var(--main);
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          white-space: nowrap;
+      }
+
+      .meal-prep-button:hover {
+          background-color: #45a049;
+      }
+
+      #meal-prep-container {
+          display: flex;
+          flex-direction: column; /* stack title, image, instructions vertically */
+          align-items: center;    /* center everything horizontally */
+          text-align: center;     /* center the text inside */
+          margin-top: 15px;
+      }
+
+      #meal-prep-container img {
+          max-width: 300px;  /* keep image manageable */
+          height: auto;
+          margin: 10px 0;    /* spacing above/below image */
+          border-radius: 8px;
+      }
+
     </style>
 </head>
 <body>
@@ -109,9 +177,9 @@
         </#if>    
         </nav>
         <div class="container">
-            <form action="">
-                <input type="search" name="" placeholder="Search here..." id="search-box">
-                <label for="search-box" class="fas fa-search"></label>
+            <form action="/customers/explore" method="get">
+                <input type="search" name="search" placeholder="Search here..." id="search-box">
+                <button type="submit" class="fas fa-search" style="border:none; background:none;"></button>
             </form>
         </div>
     </header>
@@ -122,19 +190,21 @@
         </div>
         <div class="info">
             <h2>${customer.name}</h2>
-            <a href="/customers/profile/edit" class="btn">Edit Profile</a>
+            <a href="/customers/profile/edit" class="btn">
+              <i class="fas fa-pencil-alt"></i> Edit Profile
+            </a>
         </div>
       </div>
 
       <div class="tab-buttons">
         <div class="tab-button active-tab" data-tab="user-info" onclick="showTab('user-info')">User Info</div>
-        <div class="tab-button" data-tab="progress" onclick="showTab('progress')">Progress</div>
+        <div class="tab-button" data-tab="meal" onclick="showTab('meal')">Meal Prep</div>
         <div class="tab-button" data-tab="workouts" onclick="showTab('workouts')">Workouts</div>
       </div>
 
       <div class="tab-content" id="user-info">
         <h3>User Information</h3>
-        <p><strong>Email:</strong> ${customer.email}</p>
+        <p class="email"><strong>Email:</strong> ${customer.email}</p>
         <p><strong>Date of Birth:</strong> ${customer.dob! "YYYY-MM-DD"}</p>
         <p><strong>Height:</strong> ${customer.height! "NA"}</p>
         <p><strong>Weight:</strong>
@@ -145,12 +215,38 @@
         </p>
       </div>
 
-      <div class="tab-content" id="progress">
-        <h3>Progress</h3>
-        <p><strong>Weight Change:</strong> 140 lbs → 135 lbs</p>
-        <p><strong>Workouts Completed:</strong> 52 this year</p>
-        <p><strong>Calories Burned:</strong> 24,000 kcal</p>
-      </div>
+      <div class="tab-content" id="meal">
+        <h3>Meal Prep</h3>
+
+        <div id="meal-prep-container" style="text-align:center;">
+
+            <!-- Quick Answer Section -->
+            <div id="quick-answer-section" style="margin-bottom:15px;">
+                <input type="text" id="quick-answer-question" placeholder="Ask a nutrition question" class="meal-prep-input" style="width:60%;">
+                <button type="button" id="get-quick-answer" class="meal-prep-button">Ask</button>
+                <div id="quick-answer-container" style="margin-top:10px;"></div>
+            </div>
+
+            <!-- Random Recipe Section -->
+            <div id="random-recipe-container">
+                <!-- Random recipe will appear here -->
+            </div>
+
+        </div>
+
+
+        <form id="meal-prep-form" class="meal-prep-form">
+            <div class="meal-prep-inputs">
+                <label for="includeTags">Include Tags:</label>
+                <input type="text" id="includeTags" class="meal-prep-input" placeholder="e.g., vegetarian, dessert">
+
+                <label for="excludeTags">Exclude Tags:</label>
+                <input type="text" id="excludeTags" class="meal-prep-input" placeholder="e.g., dairy">
+            </div>
+
+            <button type="button" id="get-random-recipe" class="meal-prep-button">Get Random Recipe</button>
+        </form>
+    </div>
 
       <div class="tab-content" id="workouts">
         <h3>Subscribed Workouts</h3>
@@ -183,12 +279,19 @@
                   </small>  
                 </div>
 
+                <#-- Add unsubscribe button only if subscription is active -->
+                    <#if subscription.active>
+                        <form action="/customers/dashboard/unsubscribe/${subscription.id}" method="post" style="margin-top: 10px;">
+                            <button type="submit" class="unsubscribe-btn">Cancel Subscription</button>
+                        </form>
+                    </#if>
+
               </div>
             </#list>
 
             <#else>
               <p> No subscribed workouts yet.</p>
-              <a href="/customers/explore" class="subscribe-btn">Browse Workouts</a>
+              <a href="/customers/explore" class="btn">Browse Workouts</a>
 
           </#if>
         </div>
@@ -208,6 +311,55 @@
         document.addEventListener('DOMContentLoaded', () => {
         showTab('user-info');
         });
+
+
+        document.getElementById('get-random-recipe').addEventListener('click', () => {
+        const includeTags = document.getElementById('includeTags').value;
+        const excludeTags = document.getElementById('excludeTags').value;
+
+        fetch(`/api/spoonacular/randomRecipe?includeTags=${encodeURIComponent(includeTags)}&excludeTags=${encodeURIComponent(excludeTags)}`)
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('random-recipe-container'); // separate container
+                container.innerHTML = ''; // only clear the recipe section
+
+                if (data.recipes && data.recipes.length > 0) {
+                    const recipe = data.recipes[0];
+                    container.innerHTML = `
+                        <h4 style="text-align:center;">${recipe.title}</h4>
+                        ${recipe.image ? `<img src="${recipe.image}" alt="${recipe.title}" style="max-width:300px; display:block; margin:0 auto;">` : ''}
+                        <p>${recipe.instructions || 'No instructions available.'}</p>
+                    `;
+                } else {
+                    container.innerHTML = '<p>No recipes found.</p>';
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                document.getElementById('random-recipe-container').innerHTML = '<p>Error fetching recipe.</p>';
+            });
+    });
+
+    document.getElementById('get-quick-answer').addEventListener('click', () => {
+        const question = document.getElementById('quick-answer-question').value;
+        if (!question) return; // don't fetch empty
+    
+        fetch(`/api/spoonacular/quickAnswer?question=${encodeURIComponent(question)}`)
+            .then(response => response.json())
+            .then(data => {
+                const container = document.getElementById('quick-answer-container');
+                container.innerHTML = `
+                    ${data.answer ? `<p>${data.answer}</p>` : '<p>No answer found.</p>'}
+                    ${data.image ? `<img src="${data.image}" alt="Quick Answer" style="display:block;margin:10px auto; max-width:150px;">` : ''}
+                `;
+            })
+            .catch(err => {
+                console.error(err);
+                document.getElementById('quick-answer-container').innerHTML = '<p>Error fetching answer.</p>';
+            });
+    });
+
+
     </script>
     </#noparse>
     

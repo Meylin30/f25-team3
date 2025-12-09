@@ -60,4 +60,8 @@ public class WorkoutService {
         return workoutRepository.findByProviderAndActiveTrue(provider);
     }
 
+    public List<Workout> searchWorkouts(String query) {
+    return workoutRepository.findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(query, query);
+}
+
 }

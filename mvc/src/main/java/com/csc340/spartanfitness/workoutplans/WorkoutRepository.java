@@ -11,4 +11,6 @@ public interface WorkoutRepository extends JpaRepository<Workout, Long> {
     List<Workout> findByActiveTrue();
       
     List<Workout> findByProviderAndActiveTrue(Provider provider);
+
+    List<Workout> findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String title, String description);
 }

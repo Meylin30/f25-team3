@@ -68,5 +68,10 @@ public class ProviderService {
 
         return provider;
     }
+
+    public List<Provider> searchProviders(String query) {
+    return providerRepository.findByNameContainingIgnoreCase(query);
+}
+
 }
     

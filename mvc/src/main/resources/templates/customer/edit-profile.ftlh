@@ -137,6 +137,26 @@
             background: var(--secondary);
             color: black;
         }
+
+        .cancel-btn {
+            display: inline-block;       /* same as .btn */
+            margin-top: 1rem;            /* same */
+            padding: 3% 3.5rem;          /* same */
+            background: #6c757d;         /* custom color (gray) */
+            color: white;                /* text color */
+            font-size: 1.7rem;           /* same */
+            border-radius: 5rem;         /* same */
+            cursor: pointer;             /* same */
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.2s ease;  /* smooth hover transition */
+        }
+        
+        .cancel-btn:hover {
+            background: #495057;         /* darker gray on hover */
+            color: white;                /* keep text white */
+        }
+
     </style>
 </head>
 <body>
@@ -154,9 +174,10 @@
             </#if>    
         </nav>
         <div class="container">
-            <form action="">
-                <input type="search" placeholder="Search here..." id="search-box">
+            <form action="/customers/explore" method="get">
+                <input type="search" name="search" placeholder="Search here..." id="search-box">
                 <label for="search-box" class="fas fa-search"></label>
+                <button type="submit" style="display:none;"></button>
             </form>
         </div>
     </header>
@@ -167,7 +188,10 @@
                 <i class="fas fa-user-circle"></i>
             </div>
             <div class="info">
-                <p>edit profile picture</p>
+            <h2>${customer.name}</h2>
+                <a href="/customers/dashboard" class="cancel-btn">
+                    <i class="fas fa-pencil-alt"></i> Cancel Edits
+                </a>
             </div>
         </div>
 
@@ -180,6 +204,11 @@
         <!-- Tab 1: User Info -->
         <div class="tab-content active-tab-content" id="user-info">
             <h3>Edit Your Information</h3>
+            <#if error??>
+                <div class="error-message" style="color: red; margin-bottom: 10px;">
+                    ${error}
+                </div>
+            </#if>
             <form action="/customers/profile/edit" method="post">
                 <label for="email">Email</label>
                 <input type="email" name="email" placeholder="${customer.email}" value="${customer.email}" required>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>${title! "Homepage"}</title>
+    <title>Details for ${workout.title}</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
@@ -37,9 +37,10 @@
         </#if>    
         </nav>
         <div class="container">
-            <form action="">
-                <input type="search" name="" placeholder="Search here..." id="search-box">
+            <form action="/customers/explore" method="get">
+                <input type="search" name="search" placeholder="Search here..." id="search-box">
                 <label for="search-box" class="fas fa-search"></label>
+                <button type="submit" style="display:none;"></button>
             </form>
         </div>
     </header>
@@ -53,7 +54,7 @@
             <h2>${workout.title}</h2>
             <div class="trainer">
               <i class="fas fa-user-circle"></i>
-              <span><a href="/providers/${workout.provider.id}">${workout.provider.name}</a></span>
+              <span><a href="/customers/explore/trainer/${workout.provider.id}" class="name-link">${workout.provider.name}</a></span>
             </div>
             <div class="rating">
               <#list 1..5 as i>
@@ -81,12 +82,13 @@
 
       <div class="workout-details">
         <h3>Workout Details</h3>
-        <p>${workout.description! "no desciption available"}</p>
         <ul>
-          <li>⏱ Duration: 4 Weeks</li>
-          <li>🔥 Intensity: ${workout.fitnessLevel}</li>
-          <li>📅 Frequency: 4 Days/Week</li>
+          <li> Duration: 4 Weeks</li>
+          <li> Fitness Level: ${workout.fitnessLevel}</li>
         </ul>
+        <h4>Description:</h4>
+        <p>${workout.description?has_content?then(workout.description, "no description available")}</p>
+
         <div class="buttons">
           <#if subscribed>
             <button class="subscribe-btn" type="submit" disabled>Subscribed</button>
@@ -110,8 +112,14 @@
         <#if reviews?exists && reviews?has_content>
             <#assign sortedReviews = reviews?sort_by("createdAt")?reverse>
             <#assign latest = sortedReviews[0] />
-            <div class="review-card" style="margin-bottom: 20px; padding:15px; border:1px solid #ddd; border-radius:8px;">
+            <div class="review-card">
+                <div class="review-author">
+                    <i class="fas fa-user-circle"></i> 
+                    ${latestCustomerName}
+                </div>
+                
                 <div class="review-rating">
+
                     <#list 1..5 as i>
                       <i class="
                           <#if i <= latest.rating>
@@ -130,10 +138,7 @@
                     ${latest.comment! "No comment left."}
                 </p>
 
-                <div style="color:#555;">
-                    <i class="fas fa-user-circle"></i> 
-                    ${latestCustomerName}
-                </div>
+                
             </div>
 
             <a href="/customers/explore/${workout.id}/review"

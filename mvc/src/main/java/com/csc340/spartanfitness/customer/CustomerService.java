@@ -30,6 +30,7 @@ public class CustomerService {
         customer.setDob(customerDetails.getDob());
         customer.setHeight(customerDetails.getHeight());
         customer.setWeight(customerDetails.getWeight());
+        customer.setPassword(customerDetails.getPassword());
 
         return customerRepository.save(customer);
     }

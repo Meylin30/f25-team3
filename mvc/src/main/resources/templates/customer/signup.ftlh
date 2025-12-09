@@ -4,9 +4,30 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SpartanFitness.com</title>
+    <title>Sign-Up</title>
     <link rel="stylesheet"  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <link rel="stylesheet" href="/css/customer-style.css">
+
+    <style>
+    /* Step 3 review text */
+.form-step:last-of-type p {
+    font-size: 1.6rem;        
+    color: #333;              
+    margin-bottom: 1.2rem;    
+    line-height: 1.6;        
+    text-align: center;       
+}
+
+.form-step:last-of-type p:first-of-type {
+    font-weight: 600;         
+}
+
+.form-step:last-of-type p:last-of-type {
+    font-style: italic;  
+    color: var(--main);     
+}
+
+    </style>
 </head>
 <body>
 
@@ -29,10 +50,11 @@
         </#if>    
         </nav>
         <div class="container">
-                <form action="">
-                    <input type="search" name="" placeholder="Search here..." id="search-box">
-                    <label for="search-box" class="fas fa-search"></label>
-                </form>
+                <form action="/customers/explore" method="get">
+                <input type="search" name="search" placeholder="Search here..." id="search-box">
+                <label for="search-box" class="fas fa-search"></label>
+                <button type="submit" style="display:none;"></button>
+            </form>
         </div>
     </header>
 
@@ -83,24 +105,11 @@
           </div>
 
           <div class="form-step">
-            <h2>Step 3: Fitness Info</h2>
+            <h2>Step 3: Review Your Info</h2>
 
-            <label for="fitness-level">Fitness Level</label>
-            <select id="fitness-level">
-              <option value="" disabled selected>Select your level</option>
-              <option value="beginner">Beginner</option>
-              <option value="intermediate">Intermediate</option>
-              <option value="advanced">Advanced</option>
-            </select>
+            <p>Please check that all the information you’ve entered is correct before creating your account.</p>
+            <p>If you need to make any changes, you can use the “Previous” button to go back.</p>
 
-            <label for="goal">Fitness Goal</label>
-            <select id="goal">
-              <option value="" disabled selected>Select your goal</option>
-              <option value="lose-weight">Lose Weight</option>
-              <option value="build-muscle">Build Muscle</option>
-              <option value="improve-endurance">Improve Endurance</option>
-              <option value="general-health">General Health</option>
-            </select>
 
             <div class="buttons">
               <button type="button" class="prev-btn">Previous</button>

@@ -2,6 +2,8 @@ package com.csc340.spartanfitness.mvc.controller;
 
 import com.csc340.spartanfitness.customer.Customer;
 import com.csc340.spartanfitness.customer.CustomerService;
+import com.csc340.spartanfitness.provider.Provider;
+import com.csc340.spartanfitness.provider.ProviderService;
 import com.csc340.spartanfitness.workoutplans.Workout;
 import com.csc340.spartanfitness.workoutplans.WorkoutService;
 import com.csc340.spartanfitness.review.Review;
@@ -22,22 +24,27 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/customers")
 public class CustomerMvcController {
     private final CustomerService customerService;
+    private final ProviderService providerService;
     private final SubscriptionService subscriptionService;
     private final WorkoutService workoutService;
     private final ReviewService reviewService;
 
     public CustomerMvcController(CustomerService customerService,
+                                 ProviderService providerService,
                                  SubscriptionService subscriptionService,
                                  WorkoutService workoutService,
                                  ReviewService reviewService) {
         this.customerService = customerService;
+        this.providerService = providerService;
         this.subscriptionService = subscriptionService;
         this.workoutService = workoutService;
         this.reviewService = reviewService;
@@ -110,39 +117,62 @@ public class CustomerMvcController {
             return "redirect:/signin";
         }
 
+        System.out.println("linking customer to database");
         Customer customer = customerService.getCustomerById(customerId);
         
         try {
+            System.out.println("Starting profile edit");
             customerService.authenticate(customer.getEmail(), currentPassword);
-
+            System.out.println("\u001B[32m" +"authentication successful!" + "\u001B[0m");
             Customer updatedCustomer = new Customer();
+            
             updatedCustomer.setName(name);
+            System.out.println("Update name complete");
             updatedCustomer.setEmail(email);
+            System.out.println("Update email complete");
             updatedCustomer.setWeight(weight != null && !weight.trim().isEmpty()
                  ? new BigDecimal(weight).setScale(2, RoundingMode.HALF_UP) : customer.getWeight());
+                 System.out.println("Update weight complete");
             updatedCustomer.setHeight(height != null && !height.trim().isEmpty()
-                 ? height : customer.getHeight());     
+                 ? height : customer.getHeight());
+                 System.out.println("Update height complete");     
             updatedCustomer.setPassword(newPassword != null && !newPassword.trim().isEmpty()
                  ? newPassword : customer.getPassword());
-            updatedCustomer.setDob(dob != null
-                 ? LocalDate.parse(dob, DateTimeFormatter.ISO_DATE) : customer.getDob()
-);
-
+                 System.out.println("Update password complete");
+            updatedCustomer.setDob(dob != null && !dob.isBlank()
+                 ? LocalDate.parse(dob, DateTimeFormatter.ISO_DATE) : customer.getDob());     
             customerService.updateCustomer(customerId, updatedCustomer);
+            System.out.println("Update dob complete");
+
             return "redirect:/customers/dashboard";
         } catch (Exception e) {
             Customer originalCustomer = customerService.getCustomerById(customerId);
             model.addAttribute("customer", originalCustomer);
             model.addAttribute("error", "Current password is incorrect.");
-            return "redirect:/edit-profile";
+            return "customer/edit-profile";
         }
     }
 
     @GetMapping("/explore")
-    public String browseWorkouts(Model model) {
+    public String browseWorkouts(@RequestParam(value = "search", required = false) String search, Model model) {
         List<Workout> availableWorkouts = workoutService.getActiveWorkouts();
+        List<Provider> allProviders = providerService.getAllProviders();
 
-        model.addAttribute("workouts", availableWorkouts);
+         // Filter workouts independently
+        List<Workout> filteredWorkouts = (search != null && !search.isBlank())
+                ? availableWorkouts.stream()
+                    .filter(w -> w.getTitle().toLowerCase().contains(search.toLowerCase()) ||
+                                 w.getDescription().toLowerCase().contains(search.toLowerCase()))
+                    .toList() : List.of();
+
+        // Filter providers independently
+        List<Provider> filteredProviders = (search != null && !search.isBlank())
+                ? allProviders.stream()
+                    .filter(p -> p.getName().toLowerCase().contains(search.toLowerCase()))
+                    .toList() : List.of();
+
+        model.addAttribute("searchWorkouts", filteredWorkouts);
+        model.addAttribute("searchProviders", filteredProviders);
 
         model.addAttribute("beginnerWorkouts", availableWorkouts.stream()
             .filter(w -> w.getFitnessLevel() == Workout.FitnessLevel.BEGINNER)
@@ -156,6 +186,9 @@ public class CustomerMvcController {
             .filter(w -> w.getFitnessLevel() == Workout.FitnessLevel.ADVANCED)
             .toList());
 
+        model.addAttribute("workouts", availableWorkouts);
+        model.addAttribute("providers", allProviders);    
+
         return "customer/explore";
     }
 
@@ -167,6 +200,9 @@ public class CustomerMvcController {
         }
 
         Workout workout = workoutService.getWorkoutById(id);
+        if(workout == null){
+            return "redirect:/customers/explore";
+        }
         List<Review> allReviews = reviewService.getReviewsByWorkout(workout);
         Customer customer = customerService.getCustomerById(customerId);
         boolean subscribed = customer.getSubscriptions().stream()
@@ -268,6 +304,59 @@ public class CustomerMvcController {
 
         reviewService.createReview(review);
 
+        return "redirect:/customers/explore/" + workoutId;
+    }
+
+    @GetMapping("/explore/trainer/{id}")
+    public String viewProfile(@PathVariable Long id, Model model, HttpSession session) {
+        Long customerId = (Long) session.getAttribute("customerId");
+        if(customerId == null) {
+            return "redirect:/signin";
+        }
+
+        Provider provider = providerService.getProviderById(id);
+        if(provider == null){
+            return "redirect:/customers/explore";
+        }
+        List<Workout> workoutsByProvider = workoutService.getWorkoutsByProvider(provider);
+        List<Review> reviewsByProvider = reviewService.getReviewsByProvider(provider);
+
+        Map<String, Double> workoutAverageRatings = new HashMap<>();
+        Map<String, List<Review>> workoutReviews = new HashMap<>();
+        for (Workout w : workoutsByProvider) {
+            workoutAverageRatings.put(w.getId().toString(), reviewService.getAverageRating(w));
+            workoutReviews.put(w.getId().toString(), reviewService.getReviewsByWorkout(w));
+        }
+        
+        model.addAttribute("provider", provider);
+        model.addAttribute("workouts", workoutsByProvider);
+        model.addAttribute("reviews", reviewsByProvider);
+        model.addAttribute("workoutAverageRatings", workoutAverageRatings);
+        model.addAttribute("workoutReviews", workoutReviews);
+
+        return "customer/view-profile";
+    }  
+    
+    @PostMapping("/dashboard/unsubscribe/{id}")
+    public String unsubscribe(@PathVariable Long id, HttpSession session) {
+        Long customerId = (Long) session.getAttribute("customerId");
+        if (customerId == null) {
+            return "redirect:/signin";
+        }
+
+        Customer customer = customerService.getCustomerById(customerId);
+        List<Subscription> activeSubscriptions = subscriptionService.getActiveSubscriptionsByCustomer(customer);
+
+        Subscription subscriptionToCancel = activeSubscriptions.stream()
+            .filter(s -> s.getId().equals(id))
+            .findFirst()
+            .orElse(null);
+
+        if (subscriptionToCancel != null) {
+        subscriptionToCancel.setActive(false);
+        subscriptionToCancel.setEndDate(LocalDateTime.now());
+        subscriptionService.updateSubscription(subscriptionToCancel.getId(), subscriptionToCancel);
+    }
         return "redirect:/customers/dashboard";
     }
 }
