@@ -37,7 +37,7 @@ A provider shall be to modify their profile by going to their profile page. They
 ##### 2.2.1.4 Create workout plans
 The provider shall be able to create a new workout plans. They would provide a workout names, and description. This workouts can be unique to each provider. 
 ##### 2.2.1.4 View Customer Stats
-A provider will be able to view several statistics such the total amount of subscribers, average ratings, and the overall progress of their customers. 
+A provider will be able to view several statistics such the total amount of subscribers, average ratings, and how many workouts they have created. 
 
 #### 2.2.2 Actor: Customer
 ##### 2.2.2.1 Sign Up
