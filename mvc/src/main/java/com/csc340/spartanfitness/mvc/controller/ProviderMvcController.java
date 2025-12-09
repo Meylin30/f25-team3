@@ -1,5 +1,7 @@
 package com.csc340.spartanfitness.mvc.controller;
 
+import com.csc340.spartanfitness.Exercise.Exercise;
+import com.csc340.spartanfitness.Exercise.ExerciseService;
 import com.csc340.spartanfitness.provider.Provider;
 import com.csc340.spartanfitness.provider.ProviderService;
 import com.csc340.spartanfitness.review.ReviewService;
@@ -28,6 +30,8 @@ public class ProviderMvcController {
     private final WorkoutService workoutService;
     private final ReviewService reviewService;
     private final SubscriptionService subscriptionService;
+    private final ExerciseService exerciseService;
+
     
 
 
@@ -268,5 +272,70 @@ public String viewWorkoutSubscribers(
 
 }
 
+@GetMapping("/{providerId}/workouts/{workoutId}/exercises/create")
+public String showAddExercise(
+        @PathVariable Long providerId,
+        @PathVariable Long workoutId,
+        Model model) {
 
+    model.addAttribute("providerId", providerId);
+    model.addAttribute("workoutId", workoutId);
+    model.addAttribute("exercise", new Exercise());
+
+    return "provider/exercise-create";
 }
+
+@PostMapping("/{providerId}/workouts/{workoutId}/exercises/create")
+public String saveExercise(
+        @PathVariable Long providerId,
+        @PathVariable Long workoutId,
+        @ModelAttribute Exercise exercise) {
+
+    Workout workout = workoutService.getWorkoutById(workoutId);
+
+    exerciseService.addExerciseToWorkout(workout, exercise);
+
+    return "redirect:/providers/" + providerId + "/workouts/" + workoutId + "/edit";
+}
+
+@GetMapping("/{providerId}/workouts/{workoutId}/exercises/{exerciseId}/edit")
+public String editExercise(
+        @PathVariable Long providerId,
+        @PathVariable Long workoutId,
+        @PathVariable Long exerciseId,
+        Model model) {
+
+    Workout workout = workoutService.getWorkoutById(workoutId);
+    Exercise exercise = exerciseService.getExerciseById(exerciseId);
+
+    model.addAttribute("providerId", providerId);
+    model.addAttribute("workout", workout);
+    model.addAttribute("exercise", exercise);
+
+    return "provider/edit-exercise";   
+}
+
+@PostMapping("/{providerId}/workouts/{workoutId}/exercises/{exerciseId}/edit")
+public String updateExercise(
+        @PathVariable Long providerId,
+        @PathVariable Long workoutId,
+        @PathVariable Long exerciseId,
+        @ModelAttribute Exercise exerciseDetails) {
+
+    exerciseService.updateExercise(exerciseId, exerciseDetails);
+
+    return "redirect:/providers/" + providerId + "/workouts/" + workoutId + "/edit";
+}
+
+@PostMapping("/{providerId}/workouts/{workoutId}/exercises/{exerciseId}/delete")
+public String deleteExercise(
+        @PathVariable Long providerId,
+        @PathVariable Long workoutId,
+        @PathVariable Long exerciseId) {
+
+    exerciseService.deleteExercise(exerciseId);
+
+    return "redirect:/providers/" + providerId + "/workouts/" + workoutId + "/edit";
+}
+}
+
