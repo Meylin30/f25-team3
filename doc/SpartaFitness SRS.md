@@ -100,13 +100,13 @@ We will be using Java, with our program being dependent on Spring & SpringBoot, 
 
 ### 3.1 Functional Requirements 
   * FR#1: The system shall allow providers to create and publish workout plans.
-    + The system shalll allow providers to specify details for each plan, including level of experience and fitness goal.
+    + The system shalll allow providers to specify details for each plan, including level of fitness and description.
   * FR#2: The system shall allow providers to manage their workout plans. 
     + The system shall allow providers to update, edit, or remove workout plans any time.
   * FR#3: The system shall allow display user progress metrics, such as completed workouts, exercise performance, and consistency. 
   * FR#4: The system shall allow the provider to respond to reviews. 
   * FR#5: The system shall allow customers to browse a list of workout plans.
-    + The list of workouts shall have a search and filter option, by level of experience and/or goal.
+    + The list of workouts shall have a search and filter option, by level of experience and/or workout type.
   * FR#6: The system shall allow customers to subscribe to any workout plan.
     + A customer may unscribe at any time.
   * FR#7:The system shall allow the customer to rate the workout based on overall plan, individual exercises of that plan, and difficulty.
@@ -122,8 +122,8 @@ We will be using Java, with our program being dependent on Spring & SpringBoot, 
 2. Provider Portal 
   * Create, edit, and publish workout plans 
   * Manage existing workout plans (update, delete)
-  * View user subscription and cancellations
-  * View user ratings, review, and progress data. 
+  * View user subscription
+  * View user ratings, and reviews
 
 Web pages using HTML, CSS, and Java.
 
