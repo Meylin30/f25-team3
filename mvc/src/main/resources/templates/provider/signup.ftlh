@@ -22,7 +22,7 @@
             <span class="dot"></span>
         </div>
 
-        <!-- STEP 1 -->
+        
         <div class="form-step active">
             <h3 style="margin-bottom: 15px; color: var(--secondary); font-size: 20px;">Your Details</h3>
 
@@ -35,10 +35,9 @@
             <label>Password</label>
             <input type="password" name="password" required placeholder="Create Password">
 
-            <button type="button" class="next-btn btn-1">Next</button>
         </div>
 
-        <!-- STEP 2 -->
+       
         <div class="form-step">
             <h3 style="margin-bottom: 15px; color: var(--secondary); font-size: 20px;">Professional Info</h3>
 

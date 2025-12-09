@@ -2,137 +2,75 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SpartanFitness.com</title>
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <title>Sign In - SpartanFitness</title>
     <link rel="stylesheet" href="/css/style.css">
-
-    <style>
-        :root {
-            --main: #0F2044;
-            --secondary: #FFB71B;
-            --font: #FFFFFF;
-            --font-secondary: #BEC0C2;
-        }
-
-        body {
-            background-color: var(--main);
-            color: var(--font);
-        }
-
-        .user-type {
-            display: flex;
-            gap: 20px;
-            margin: 20px 0;
-        }
-
-        .user-type label {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            gap: 8px;
-            font-weight: bold;
-            color: var(--font);
-        }
-
-        .user-type input[type="radio"] {
-            display: none;
-        }
-
-        .custom-radio {
-            width: 18px;
-            height: 18px;
-            border: 2px solid var(--secondary);
-            border-radius: 50%;
-            background-color: var(--main);
-            position: relative;
-        }
-
-        .user-type input[type="radio"]:checked + .custom-radio::after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 10px;
-            height: 10px;
-            background-color: var(--secondary);
-            border-radius: 50%;
-        }
-    </style>
 </head>
 
-<body class="login">
+<body class="auth-bg">
 
-    <div class="wrapper">
+<div class="auth-container">
+
+    <div class="auth-card">
+
+        <h2 class="auth-title">Welcome Back 👋</h2>
+        <p class="auth-subtext">
+            Log in to continue your fitness journey
+        </p>
+
         <form method="post" id="loginForm">
-            <h1>Login</h1>
 
-            <!-- User type selection -->
-            <div class="user-type">
-                <label>
+            <!-- ROLE SELECTION -->
+            <div class="role-toggle">
+                <label class="role-option">
                     <input type="radio" name="userType" value="customer">
-                    <span class="custom-radio"></span>
-                    Customer
+                    <span>Customer</span>
                 </label>
 
-                <label>
+                <label class="role-option">
                     <input type="radio" name="userType" value="provider">
-                    <span class="custom-radio"></span>
-                    Provider
+                    <span>Trainer</span>
                 </label>
             </div>
 
-            <!-- Email -->
-            <div class="input-box">
-                <input type="email" name="email" placeholder="Email" required>
-            </div>
+            <!-- INPUTS -->
+            <input type="email" name="email" class="auth-input" placeholder="Email address" required>
+            <input type="password" name="password" class="auth-input" placeholder="Password" required>
 
-            <!-- Password -->
-            <div class="input-box">
-                <input type="password" name="password" placeholder="Password" required>
-            </div>
+            <a href="#" class="auth-forgot">Forgot password?</a>
 
-            <!-- Remember + forgot -->
-            <div class="remember-forgot">
-                <label><input type="checkbox"> Remember me</label>
-                <a href="#">Forgot Password?</a>
-            </div>
+            <!-- BUTTON -->
+            <button type="submit" class="auth-btn">Sign In</button>
 
-            <!-- Button -->
-            <button type="submit" class="btn">Login</button>
+            <!-- FOOTER -->
+            <p class="auth-footer">
+                New here?
+                <a href="/customers/signup">Create Account</a> |
+                <a href="/providers/signup">Become a Trainer</a>
+            </p>
 
-            <!-- Sign up link -->
-            <div class="register-link">
-                <p>Don't have an account?  
-                    <a href="/customers/signup">Sign Up |</a>
-                    <a href="/providers/signup">Register</a>
-                </p>
-            </div>
         </form>
+
     </div>
+</div>
 
-    <script>
-        const form = document.getElementById("loginForm");
-
-        form.addEventListener("submit", function (e) {
-            const userType = document.querySelector('input[name="userType"]:checked');
-
-            if (!userType) {
-                e.preventDefault();
-                alert("Please select Customer or Provider before logging in.");
-                return;
-            }
-
-            if (userType.value === "customer") {
-                form.action = "/customers/signin";
-            } else {
-                form.action = "/providers/signin";
-            }
-        });
-    </script>
+<script>
+document.getElementById("loginForm").addEventListener("submit", function(e) {
+    const selected = document.querySelector('input[name="userType"]:checked');
+    if (!selected) {
+        e.preventDefault();
+        alert("Please select Customer or Trainer before logging in.");
+        return;
+    }
+    this.action = selected.value === "customer" ? "/customers/signin" : "/providers/signin";
+});
+</script>
 
 </body>
 </html>
+
+
+
+
+
+

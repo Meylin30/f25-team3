@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.csc340.spartanfitness.Exercise.Exercise;
 import com.csc340.spartanfitness.provider.Provider;
 import com.csc340.spartanfitness.subscription.Subscription;
 import com.csc340.spartanfitness.review.Review;
@@ -61,6 +62,10 @@ public class Workout {
         INTERMEDIATE,
         ADVANCED
     }
+
+    @OneToMany(mappedBy = "workout", cascade = CascadeType.ALL, orphanRemoval = true)
+private List<Exercise> exercises = new ArrayList<>();
+
 }
     
 
